@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_little_little_margin">4dp</dimen>
+    <dimen name="activity_vertical_little_little_margin">4dp</dimen>
+    <dimen name="activity_horizontal_little_margin">8dp</dimen>
+    <dimen name="activity_vertical_little_margin">8dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_big_margin">24dp</dimen>
+    <dimen name="activity_vertical_big_margin">24dp</dimen>
+
+    <!-- ListFragment -->
+    <dimen name="item_manga_card_view_corners_radius">16dp</dimen>
+    <dimen name="item_manga_card_view_elevation">4dp</dimen>
+    <dimen name="item_manga_width">125dp</dimen>
+    <dimen name="item_manga_height">200dp</dimen>
+    <dimen name="item_manga_text_view_title_size">17sp</dimen>
+</resources>
