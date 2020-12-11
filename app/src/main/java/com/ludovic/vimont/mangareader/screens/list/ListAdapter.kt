@@ -13,6 +13,8 @@ import com.ludovic.vimont.mangareader.entities.Manga
 import kotlin.collections.ArrayList
 
 class ListAdapter(private val mangas: ArrayList<Manga>): RecyclerView.Adapter<ListAdapter.MangaViewHolder>() {
+    var onItemClick: ((Manga) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MangaViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.item_manga, parent, false)
         return MangaViewHolder(itemView)
@@ -27,6 +29,9 @@ class ListAdapter(private val mangas: ArrayList<Manga>): RecyclerView.Adapter<Li
             Glide.with(context)
                 .load(manga.cover)
                 .into(imageViewCover)
+            itemView.setOnClickListener {
+                onItemClick?.invoke(manga)
+            }
         }
     }
 

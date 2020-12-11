@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.mangareader.databinding.FragmentListBinding
@@ -16,7 +18,7 @@ class ListFragment: Fragment() {
     private lateinit var binding: FragmentListBinding
     private val viewModel: ListViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -27,14 +29,14 @@ class ListFragment: Fragment() {
         configureViewModel()
     }
 
-    /**
-     * Configure the recyclerView based on the layout chosen by the user. By default, it is a list.
-     * @see: UserPreferences
-     */
     private fun configureRecyclerView() {
         val recyclerView: RecyclerView = binding.recyclerViewMangas
         recyclerView.adapter = listAdapter
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        listAdapter.onItemClick = { manga: Manga ->
+            val action: NavDirections = ListFragmentDirections.actionListFragmentToDetailFragment(manga.getWebTitle())
+            findNavController().navigate(action)
+        }
     }
 
     private fun configureViewModel() {

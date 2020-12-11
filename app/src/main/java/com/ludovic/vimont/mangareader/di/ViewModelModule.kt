@@ -1,5 +1,7 @@
 package com.ludovic.vimont.mangareader.di
 
+import com.ludovic.vimont.mangareader.screens.detail.DetailRepositoryImpl
+import com.ludovic.vimont.mangareader.screens.detail.DetailViewModel
 import com.ludovic.vimont.mangareader.screens.list.ListRepositoryImpl
 import com.ludovic.vimont.mangareader.screens.list.ListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -10,6 +12,9 @@ object ViewModelModule {
     val viewModelModule: Module = module {
         viewModel {
             ListViewModel(get<ListRepositoryImpl>())
+        }
+        viewModel {
+            DetailViewModel(get<DetailRepositoryImpl>())
         }
     }
 }
