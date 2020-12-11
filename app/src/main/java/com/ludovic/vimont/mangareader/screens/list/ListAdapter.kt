@@ -1,5 +1,6 @@
 package com.ludovic.vimont.mangareader.screens.list
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +21,10 @@ class ListAdapter(private val mangas: ArrayList<Manga>): RecyclerView.Adapter<Li
     override fun onBindViewHolder(holder: MangaViewHolder, position: Int) {
         val manga: Manga = mangas[position]
         with(holder) {
+            val context: Context = itemView.context
             textViewTitle.text = manga.title
-            Glide.with(itemView.context)
+            textViewScore.text = context.getString(R.string.list_fragment_item_score, manga.score)
+            Glide.with(context)
                 .load(manga.cover)
                 .into(imageViewCover)
         }
@@ -40,5 +43,6 @@ class ListAdapter(private val mangas: ArrayList<Manga>): RecyclerView.Adapter<Li
     inner class MangaViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val imageViewCover: ImageView = itemView.findViewById(R.id.image_view_cover)
         val textViewTitle: TextView = itemView.findViewById(R.id.text_view_manga_title)
+        val textViewScore: TextView = itemView.findViewById(R.id.text_view_manga_score)
     }
 }
