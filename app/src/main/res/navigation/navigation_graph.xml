@@ -18,5 +18,7 @@
         <argument
             android:name="manga_title"
             app:argType="string" />
+        <argument android:name="manga_cover"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
 import com.ludovic.vimont.mangareader.entities.Chapter
+import com.ludovic.vimont.mangareader.entities.ReadingPage
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,8 +39,9 @@ class DetailFragment: Fragment() {
 
     private fun configureViewModel() {
         viewModel.downloadContent(detailFragmentArgs.mangaTitle)
-        viewModel.chapters.observe(viewLifecycleOwner, { chapters: List<Chapter> ->
-            detailChapterAdapter.setItems(chapters)
+        viewModel.readingPage.observe(viewLifecycleOwner, { page: ReadingPage ->
+            println("page: $page")
+            detailChapterAdapter.setItems(page.chapters)
         })
     }
 }

@@ -1,7 +1,7 @@
 package com.ludovic.vimont.mangareader.screens.detail
 
-import com.ludovic.vimont.mangareader.entities.Chapter
+import com.ludovic.vimont.mangareader.entities.ReadingPage
 
 interface DetailRepository {
-    suspend fun launchDownload(mangaTitle: String): List<Chapter>
+    suspend fun launchDownload(mangaTitle: String): ReadingPage
 }

@@ -34,7 +34,7 @@ class ListFragment: Fragment() {
         recyclerView.adapter = listAdapter
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         listAdapter.onItemClick = { manga: Manga ->
-            val action: NavDirections = ListFragmentDirections.actionListFragmentToDetailFragment(manga.getWebTitle())
+            val action: NavDirections = ListFragmentDirections.actionListFragmentToDetailFragment(manga.getWebTitle(), manga.cover)
             findNavController().navigate(action)
         }
     }
