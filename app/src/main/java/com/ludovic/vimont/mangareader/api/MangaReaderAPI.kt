@@ -8,7 +8,7 @@ import org.jsoup.nodes.Document
  */
 interface MangaReaderAPI {
     companion object {
-        const val BASE_URL = "https://www.mangareader.net/"
+        private const val BASE_URL = "https://www.mangareader.net/"
 
         const val NAME_INDEX = 0
         const val YEAR_OF_RELEASE_INDEX = 2

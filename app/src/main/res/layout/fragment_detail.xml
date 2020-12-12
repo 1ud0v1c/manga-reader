@@ -1,15 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/image_view_manga_cover"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintHeight_percent="0.45"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_little_margin"
+        app:layout_constraintBottom_toBottomOf="@id/image_view_manga_cover"
+        app:layout_constraintLeft_toLeftOf="@id/image_view_manga_cover">
+
+        <TextView
+            android:id="@+id/text_view_manga_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background"
+            android:paddingHorizontal="@dimen/activity_horizontal_little_margin"
+            android:paddingVertical="@dimen/activity_vertical_little_little_margin"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/text_view_manga_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_little_margin"
+            android:background="@color/cardview_dark_background"
+            android:paddingHorizontal="@dimen/activity_horizontal_little_margin"
+            android:paddingVertical="@dimen/activity_vertical_little_little_margin"
+            android:textColor="@color/white" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_little_margin" />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_chapters"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.55"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingVertical="@dimen/activity_vertical_little_little_margin"
+        app:layout_constraintTop_toBottomOf="@id/image_view_manga_cover" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

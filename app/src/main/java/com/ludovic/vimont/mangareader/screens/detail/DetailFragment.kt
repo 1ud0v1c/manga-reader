@@ -8,13 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
-import com.ludovic.vimont.mangareader.entities.Chapter
 import com.ludovic.vimont.mangareader.entities.ReadingPage
+import com.ludovic.vimont.mangareader.helper.ViewHelper
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment: Fragment() {
+    private val detailGenreAdapter = DetailGenreAdapter(ArrayList())
     private val detailChapterAdapter = DetailChapterAdapter(ArrayList())
     private lateinit var binding: FragmentDetailBinding
     private val viewModel: DetailViewModel by viewModel()
@@ -27,21 +29,35 @@ class DetailFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        configureRecyclerView()
+        configureRecyclerViews()
         configureViewModel()
     }
 
-    private fun configureRecyclerView() {
-        val recyclerView: RecyclerView = binding.recyclerViewChapters
-        recyclerView.adapter = detailChapterAdapter
-        recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+    private fun configureRecyclerViews() {
+        val recyclerViewGenres: RecyclerView = binding.recyclerViewGenres
+        recyclerViewGenres.adapter = detailGenreAdapter
+        recyclerViewGenres.layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+
+        val recyclerViewChapters: RecyclerView = binding.recyclerViewChapters
+        recyclerViewChapters.adapter = detailChapterAdapter
+        recyclerViewChapters.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
     }
 
     private fun configureViewModel() {
         viewModel.downloadContent(detailFragmentArgs.mangaTitle)
         viewModel.readingPage.observe(viewLifecycleOwner, { page: ReadingPage ->
-            println("page: $page")
-            detailChapterAdapter.setItems(page.chapters)
+            with(binding) {
+                textViewMangaName.text = page.name
+                textViewMangaAuthor.text = page.author
+                context?.let {
+                    Glide.with(it)
+                        .load(detailFragmentArgs.mangaCover)
+                        .into(imageViewMangaCover)
+                }
+                val genres = if (page.genres.size >= 3) page.genres.subList(0, 3) else page.genres
+                detailGenreAdapter.setItems(genres)
+                detailChapterAdapter.setItems(page.chapters)
+            }
         })
     }
 }
