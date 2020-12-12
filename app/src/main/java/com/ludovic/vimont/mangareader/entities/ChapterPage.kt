@@ -9,4 +9,8 @@ data class ChapterPage(@field:Json(name = "p")
                        @field:Json(name = "h")
                        val height: Int,
                        @field:Json(name = "w")
-                       val width: Int)
+                       val width: Int) {
+    fun getURL(): String {
+        return "https://$link"
+    }
+}
