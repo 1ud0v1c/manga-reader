@@ -3,7 +3,6 @@ package com.ludovic.vimont.mangareader.screens.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ludovic.vimont.mangareader.entities.Chapter
 import com.ludovic.vimont.mangareader.entities.ReadingPage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

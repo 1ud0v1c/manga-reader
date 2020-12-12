@@ -5,6 +5,7 @@ import com.ludovic.vimont.mangareader.api.MangaReaderAPI
 import com.ludovic.vimont.mangareader.api.RetrofitBuilder
 import com.ludovic.vimont.mangareader.screens.detail.DetailRepositoryImpl
 import com.ludovic.vimont.mangareader.screens.list.ListRepositoryImpl
+import com.ludovic.vimont.mangareader.screens.reader.ReaderRepositoryImpl
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -26,6 +27,9 @@ object DataSourceModule {
         }
         factory {
             DetailRepositoryImpl()
+        }
+        factory {
+            ReaderRepositoryImpl()
         }
     }
 }

@@ -20,5 +20,16 @@
             app:argType="string" />
         <argument android:name="manga_cover"
             app:argType="string" />
+        <action
+            android:id="@+id/action_detailFragment_to_readerFragment"
+            app:destination="@id/readerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/readerFragment"
+        android:name="com.ludovic.vimont.mangareader.screens.reader.ReaderFragment"
+        android:label="ReaderFragment" >
+        <argument
+            android:name="chapter_link"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -1,7 +1,7 @@
 package com.ludovic.vimont.mangareader.screens.detail
 
 import com.ludovic.vimont.mangareader.api.MangaReaderAPI
-import com.ludovic.vimont.mangareader.entities.Chapter
+import com.ludovic.vimont.mangareader.entities.LinkChapter
 import com.ludovic.vimont.mangareader.entities.ReadingPage
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -38,8 +38,8 @@ class DetailRepositoryImpl: DetailRepository {
         return genres
     }
 
-    private fun getChapters(table: Element): ArrayList<Chapter> {
-        val chapters = ArrayList<Chapter>()
+    private fun getChapters(table: Element): ArrayList<LinkChapter> {
+        val chapters = ArrayList<LinkChapter>()
         val trs: Elements = table.select("tr")
         trs.removeFirst()
         for (tr: Element in trs) {
@@ -47,7 +47,7 @@ class DetailRepositoryImpl: DetailRepository {
             val ahref: Element = tds[0].selectFirst("a")
             val addedDate: String = tds[1].text()
             chapters.add(
-                Chapter(
+                LinkChapter(
                     ahref.text(),
                     addedDate,
                     MangaReaderAPI.buildLink(ahref.attr("href"))

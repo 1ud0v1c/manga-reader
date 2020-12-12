@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
+import com.ludovic.vimont.mangareader.entities.LinkChapter
 import com.ludovic.vimont.mangareader.entities.ReadingPage
-import com.ludovic.vimont.mangareader.helper.ViewHelper
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,6 +43,10 @@ class DetailFragment: Fragment() {
         val recyclerViewChapters: RecyclerView = binding.recyclerViewChapters
         recyclerViewChapters.adapter = detailChapterAdapter
         recyclerViewChapters.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        detailChapterAdapter.onItemClick = { linkChapter: LinkChapter ->
+            val action: NavDirections = DetailFragmentDirections.actionDetailFragmentToReaderFragment(linkChapter.link)
+            findNavController().navigate(action)
+        }
     }
 
     private fun configureViewModel() {

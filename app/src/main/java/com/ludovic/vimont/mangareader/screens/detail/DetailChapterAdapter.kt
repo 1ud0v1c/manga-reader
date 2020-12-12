@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.mangareader.R
-import com.ludovic.vimont.mangareader.entities.Chapter
+import com.ludovic.vimont.mangareader.entities.LinkChapter
 
-class DetailChapterAdapter(private val chapters: ArrayList<Chapter>): RecyclerView.Adapter<DetailChapterAdapter.ChapterViewHolder>() {
-    var onItemClick: ((Chapter) -> Unit)? = null
+class DetailChapterAdapter(private val linkChapters: ArrayList<LinkChapter>): RecyclerView.Adapter<DetailChapterAdapter.ChapterViewHolder>() {
+    var onItemClick: ((LinkChapter) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.item_chapter, parent, false)
@@ -18,24 +18,24 @@ class DetailChapterAdapter(private val chapters: ArrayList<Chapter>): RecyclerVi
     }
 
     override fun onBindViewHolder(holder: ChapterViewHolder, position: Int) {
-        val chapter: Chapter = chapters[position]
+        val linkChapter: LinkChapter = linkChapters[position]
         with(holder) {
             val context: Context = itemView.context
-            textViewChapterTitle.text = chapter.title
-            textViewChapterDate.text = context.getString(R.string.detail_fragment_item_date, chapter.addedDate)
+            textViewChapterTitle.text = linkChapter.title
+            textViewChapterDate.text = context.getString(R.string.detail_fragment_item_date, linkChapter.addedDate)
             itemView.setOnClickListener {
-                onItemClick?.invoke(chapter)
+                onItemClick?.invoke(linkChapter)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return chapters.size
+        return linkChapters.size
     }
 
-    fun setItems(items: List<Chapter>) {
-        chapters.clear()
-        chapters.addAll(items)
+    fun setItems(items: List<LinkChapter>) {
+        linkChapters.clear()
+        linkChapters.addAll(items)
         notifyDataSetChanged()
     }
 

@@ -16,7 +16,11 @@ interface MangaReaderAPI {
         const val AUTHOR_INDEX = 4
 
         fun getManga(mangaTitle: String): Document {
-            return Jsoup.connect(BASE_URL + mangaTitle).get()
+            return getDocument(BASE_URL + mangaTitle)
+        }
+
+        fun getDocument(url: String): Document {
+            return Jsoup.connect(url).get()
         }
 
         fun buildLink(path: String): String {
