@@ -1,9 +1,7 @@
 package com.ludovic.vimont.mangareader.screens.reader
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.ludovic.vimont.mangareader.databinding.FragmentPageBinding
@@ -39,7 +37,23 @@ class ReaderPageFragment : Fragment() {
                 val imageURL: String = requireArguments().getString(KEY_IMAGE_URL, "")
                 Glide.with(it)
                     .load(imageURL)
-                    .into(imageViewCurrentPage)
+                    .into(photoViewCurrentPage)
+            }
+            with(photoViewCurrentPage) {
+                setZoomTransitionDuration(300)
+                setScaleLevels(1f, 2f, 3f)
+                setOnDoubleTapListener(
+                    object : GestureDetector.SimpleOnGestureListener() {
+                        override fun onDoubleTap(e: MotionEvent): Boolean {
+                            if (scale > 1f) {
+                                setScale(1f, e.x, e.y, true)
+                            } else {
+                                setScale(2f, e.x, e.y, true)
+                            }
+                            return true
+                        }
+                    }
+                )
             }
         }
     }

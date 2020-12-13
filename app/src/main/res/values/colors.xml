@@ -10,4 +10,6 @@
     <color name="gray">#FF4C4C4C</color>
     <color name="light_gray">#FF8C8C8C</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="background_reader">#FF262626</color>
 </resources>

@@ -10,7 +10,7 @@ import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.entities.LinkChapter
 
 class DetailChapterAdapter(private val linkChapters: ArrayList<LinkChapter>): RecyclerView.Adapter<DetailChapterAdapter.ChapterViewHolder>() {
-    var onItemClick: ((LinkChapter) -> Unit)? = null
+    var onItemClick: ((LinkChapter, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.item_chapter, parent, false)
@@ -24,7 +24,7 @@ class DetailChapterAdapter(private val linkChapters: ArrayList<LinkChapter>): Re
             textViewChapterTitle.text = linkChapter.title
             textViewChapterDate.text = context.getString(R.string.detail_fragment_item_date, linkChapter.addedDate)
             itemView.setOnClickListener {
-                onItemClick?.invoke(linkChapter)
+                onItemClick?.invoke(linkChapter, linkChapters.size)
             }
         }
     }

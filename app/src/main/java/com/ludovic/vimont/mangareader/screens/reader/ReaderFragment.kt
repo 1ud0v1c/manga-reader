@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.widget.ViewPager2
+import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentReaderBinding
 import com.ludovic.vimont.mangareader.entities.Chapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ReaderFragment: Fragment() {
+class ReaderFragment : Fragment() {
     private lateinit var pageAdapter: ReaderPageAdapter
     private lateinit var binding: FragmentReaderBinding
     private val viewModel: ReaderViewModel by viewModel()
@@ -35,7 +37,28 @@ class ReaderFragment: Fragment() {
     private fun configureViewPager() {
         with(binding) {
             viewPagerChapter.adapter = pageAdapter
+            context?.let {
+                textViewChapterProgression.text = getProgression()
+                viewPagerChapter.registerOnPageChangeCallback(object :
+                    ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        super.onPageSelected(position)
+                        textViewChapterProgression.text = getProgression(position + 1)
+                    }
+                })
+            }
         }
+    }
+
+    private fun getProgression(currentPage: Int = 1): String {
+        context?.let {
+            return it.getString(
+                R.string.reader_fragment_progression,
+                currentPage,
+                readFragmentArgs.numberOfPages
+            )
+        }
+        return ""
     }
 
     private fun configureViewModel() {

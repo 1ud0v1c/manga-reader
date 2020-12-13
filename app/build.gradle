@@ -80,11 +80,14 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
+    // PhotoView
+    implementation "com.github.chrisbanes:PhotoView:2.3.0"
+
     // Unit tests
-    testImplementation 'junit:junit:4.13.1'
-    testImplementation 'org.robolectric:robolectric:4.4'
+    testImplementation "junit:junit:4.13.1"
+    testImplementation "org.robolectric:robolectric:4.4"
 
     // UI tests
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
 }
