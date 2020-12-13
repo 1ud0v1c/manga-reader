@@ -40,4 +40,9 @@
             app:argType="integer" />
     </fragment>
 
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.ludovic.vimont.mangareader.screens.favorite.FavoriteFragment"
+        android:label="FavoriteFragment" />
+
 </navigation>

@@ -39,8 +39,7 @@ class ReaderFragment : Fragment() {
             viewPagerChapter.adapter = pageAdapter
             context?.let {
                 textViewChapterProgression.text = getProgression()
-                viewPagerChapter.registerOnPageChangeCallback(object :
-                    ViewPager2.OnPageChangeCallback() {
+                viewPagerChapter.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
                         textViewChapterProgression.text = getProgression(position + 1)

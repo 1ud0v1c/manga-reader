@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">MangaReader</string>
 
+    <!-- HomeActivity -->
+    <string name="bottom_navigation_view_popular">Popular</string>
+    <string name="bottom_navigation_view_favorite">Favorite</string>
+
     <!-- ListFragment -->
     <string name="list_fragment_item_score">Score: %.2f</string>
 
