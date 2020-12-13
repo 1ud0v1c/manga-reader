@@ -35,9 +35,6 @@
         <argument
             android:name="chapter_link"
             app:argType="string" />
-        <argument
-            android:name="number_of_pages"
-            app:argType="integer" />
     </fragment>
 
     <fragment

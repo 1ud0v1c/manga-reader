@@ -38,7 +38,6 @@ class ReaderFragment : Fragment() {
         with(binding) {
             viewPagerChapter.adapter = pageAdapter
             context?.let {
-                textViewChapterProgression.text = getProgression()
                 viewPagerChapter.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
@@ -53,8 +52,7 @@ class ReaderFragment : Fragment() {
         context?.let {
             return it.getString(
                 R.string.reader_fragment_progression,
-                currentPage,
-                readFragmentArgs.numberOfPages
+                currentPage, pageAdapter.itemCount
             )
         }
         return ""
