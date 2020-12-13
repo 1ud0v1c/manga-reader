@@ -50,7 +50,7 @@ class DetailFragment: Fragment() {
     }
 
     private fun configureViewModel() {
-        viewModel.downloadContent(detailFragmentArgs.mangaTitle)
+        viewModel.downloadContent(detailFragmentArgs.mangaId)
         viewModel.readingPage.observe(viewLifecycleOwner, { page: ReadingPage ->
             with(binding) {
                 textViewMangaName.text = page.name

@@ -26,7 +26,7 @@ object DataSourceModule {
             ListRepositoryImpl(get())
         }
         factory {
-            DetailRepositoryImpl()
+            DetailRepositoryImpl(get())
         }
         factory {
             ReaderRepositoryImpl()

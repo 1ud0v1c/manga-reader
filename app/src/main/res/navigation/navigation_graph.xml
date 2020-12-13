@@ -18,7 +18,7 @@
         android:name="com.ludovic.vimont.mangareader.screens.detail.DetailFragment"
         android:label="DetailFragment">
         <argument
-            android:name="manga_title"
+            android:name="manga_id"
             app:argType="string" />
         <argument
             android:name="manga_cover"

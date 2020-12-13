@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 class DetailViewModel(private val detailRepository: DetailRepository): ViewModel() {
     val readingPage = MutableLiveData<ReadingPage>()
 
-    fun downloadContent(mangaTitle: String) {
+    fun downloadContent(mangaId: String) {
         viewModelScope.launch(Dispatchers.Default) {
-            val loadedPage: ReadingPage = detailRepository.launchDownload(mangaTitle)
+            val loadedPage: ReadingPage = detailRepository.launchDownload(mangaId)
             readingPage.postValue(loadedPage)
         }
     }
