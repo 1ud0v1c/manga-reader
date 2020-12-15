@@ -15,4 +15,7 @@
     <dimen name="item_manga_width">125dp</dimen>
     <dimen name="item_manga_height">200dp</dimen>
     <dimen name="item_manga_text_view_title_size">17sp</dimen>
+
+    <!-- DetailFragment -->
+    <dimen name="item_genre_text_size">14sp</dimen>
 </resources>

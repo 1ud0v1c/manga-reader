@@ -9,6 +9,7 @@
     <string name="list_fragment_item_score">Score: %.2f</string>
 
     <!-- DetailFragment -->
+    <string name="detail_fragment_number_of_chapters">%d chapters</string>
     <string name="detail_fragment_item_date">Added: %s</string>
 
     <!-- ReaderFragment -->

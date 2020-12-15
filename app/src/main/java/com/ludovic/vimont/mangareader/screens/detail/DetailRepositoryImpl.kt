@@ -3,6 +3,7 @@ package com.ludovic.vimont.mangareader.screens.detail
 import com.ludovic.vimont.mangareader.api.JikanAPI
 import com.ludovic.vimont.mangareader.api.MangaReaderAPI
 import com.ludovic.vimont.mangareader.entities.FullManga
+import com.ludovic.vimont.mangareader.entities.Genre
 import com.ludovic.vimont.mangareader.entities.LinkChapter
 import com.ludovic.vimont.mangareader.entities.ReadingPage
 import org.jsoup.HttpStatusException
@@ -21,20 +22,18 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI): DetailRepository {
             }
         }
 
-        val document: Document = getDocument(manga)
-        val tables: Elements = document.select("table")
+        manga?.let {
+            val document: Document = getDocument(manga)
+            val tables: Elements = document.select("table")
+            if (tables.isNotEmpty()) {
+                val chapters = getChapters(tables.last())
+                return ReadingPage(it.title, it.synopsis, it.published.from, it.status,
+                    it.authors.first().name, it.genres.map { genre: Genre -> genre.name }, chapters
+                )
+            }
+        }
 
-        val infoTrs: Elements = tables.first().select("tr")
-        val name = extractField(infoTrs, MangaReaderAPI.NAME_INDEX)
-        val yearOfRelease = extractField(infoTrs, MangaReaderAPI.YEAR_OF_RELEASE_INDEX)
-        val status = extractField(infoTrs, MangaReaderAPI.STATUS_INDEX)
-        val author = extractField(infoTrs, MangaReaderAPI.AUTHOR_INDEX)
-        val genres = getGenres(document)
-        val synopsisElement: Element = document.select("div.d46").first()
-        val synopsis = synopsisElement.select("p").first().text()
-        val chapters = getChapters(tables.last())
-
-        return ReadingPage(name, synopsis, yearOfRelease, status, author, genres, chapters)
+        return ReadingPage("", "", "", "", "", ArrayList(), ArrayList())
     }
 
     private fun getDocument(manga: FullManga?): Document {
@@ -54,19 +53,6 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI): DetailRepository {
             }
         }
         return Document.createShell("")
-    }
-
-    private fun extractField(infoTrs: Elements, index: Int = 0): String {
-        return infoTrs[index].select("td").last().text()
-    }
-
-    private fun getGenres(document: Document): List<String> {
-        val genres = ArrayList<String>()
-        val links: Elements = document.select("a.d42")
-        for (link in links) {
-            genres.add(link.text())
-        }
-        return genres
     }
 
     private fun getChapters(table: Element): ArrayList<LinkChapter> {

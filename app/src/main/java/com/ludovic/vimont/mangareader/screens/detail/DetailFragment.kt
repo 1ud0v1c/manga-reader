@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
 import com.ludovic.vimont.mangareader.entities.LinkChapter
 import com.ludovic.vimont.mangareader.entities.ReadingPage
@@ -59,6 +60,7 @@ class DetailFragment: Fragment() {
                     Glide.with(it)
                         .load(detailFragmentArgs.mangaCover)
                         .into(imageViewMangaCover)
+                    textViewNumberOfChapters.text = it.getString(R.string.detail_fragment_number_of_chapters, page.chapters.size)
                 }
                 val genres = if (page.genres.size >= 3) page.genres.subList(0, 3) else page.genres
                 detailGenreAdapter.setItems(genres)
