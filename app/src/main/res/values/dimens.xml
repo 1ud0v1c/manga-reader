@@ -9,6 +9,9 @@
     <dimen name="activity_horizontal_big_margin">24dp</dimen>
     <dimen name="activity_vertical_big_margin">24dp</dimen>
 
+    <!-- Common -->
+    <dimen name="button_padding">4dp</dimen>
+
     <!-- ListFragment -->
     <dimen name="item_manga_card_view_corners_radius">16dp</dimen>
     <dimen name="item_manga_card_view_elevation">4dp</dimen>
@@ -17,5 +20,6 @@
     <dimen name="item_manga_text_view_title_size">17sp</dimen>
 
     <!-- DetailFragment -->
-    <dimen name="item_genre_text_size">14sp</dimen>
+    <dimen name="detail_fragment_background_button_size">40dp</dimen>
+    <dimen name="item_genre_text_size">13sp</dimen>
 </resources>

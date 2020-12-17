@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/item_genre_background"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingHorizontal="@dimen/activity_horizontal_little_margin"
         android:paddingVertical="@dimen/activity_vertical_little_margin"
         android:textSize="@dimen/item_genre_text_size"
         android:textColor="@color/white"

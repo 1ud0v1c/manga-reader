@@ -33,6 +33,10 @@ class DetailChapterAdapter(private val linkChapters: ArrayList<LinkChapter>): Re
         return linkChapters.size
     }
 
+    fun getItems(): ArrayList<LinkChapter> {
+        return linkChapters
+    }
+
     fun setItems(items: List<LinkChapter>) {
         linkChapters.clear()
         linkChapters.addAll(items)

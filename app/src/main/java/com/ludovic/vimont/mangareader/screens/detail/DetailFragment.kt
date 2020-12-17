@@ -32,8 +32,17 @@ class DetailFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupDownloadAction()
         configureRecyclerViews()
         configureViewModel()
+    }
+
+    private fun setupDownloadAction() {
+        with(binding) {
+            imageViewDownload.setOnClickListener {
+                viewModel.downloadChapters(detailChapterAdapter.getItems())
+            }
+        }
     }
 
     private fun configureRecyclerViews() {
@@ -51,7 +60,7 @@ class DetailFragment: Fragment() {
     }
 
     private fun configureViewModel() {
-        viewModel.downloadContent(detailFragmentArgs.mangaId)
+        viewModel.fetchMangaContent(detailFragmentArgs.mangaId)
         viewModel.readingPage.observe(viewLifecycleOwner, { page: ReadingPage ->
             with(binding) {
                 textViewMangaName.text = page.name
