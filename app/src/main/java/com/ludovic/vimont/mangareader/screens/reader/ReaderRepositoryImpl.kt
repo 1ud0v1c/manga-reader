@@ -13,17 +13,10 @@ class ReaderRepositoryImpl: ReaderRepository {
         val scripts: Elements = document.select("script")
         if (scripts.size > 1) {
             val jsonContent: String = scripts[1].data().replace("document[\"mj\"]=", "")
-            convertJsonToChapter(jsonContent)?.let { chapter: Chapter ->
+            MangaReaderAPI.convertJsonToChapter(jsonContent)?.let { chapter: Chapter ->
                 return chapter
             }
         }
         return null
-    }
-
-    private fun convertJsonToChapter(jsonContent: String): Chapter? {
-        val moshi = Moshi.Builder().build()
-        val type = Types.newParameterizedType(Chapter::class.java)
-        val adapter = moshi.adapter<Chapter>(type)
-        return adapter.fromJson(jsonContent)
     }
 }
