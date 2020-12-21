@@ -1,4 +1,4 @@
-package com.ludovic.vimont.mangareader.screens.reader
+package com.ludovic.vimont.mangareader.screens.reader.pager
 
 import android.os.Bundle
 import android.view.*
@@ -41,7 +41,7 @@ class ReaderPageFragment : Fragment() {
             }
             with(photoViewCurrentPage) {
                 setZoomTransitionDuration(300)
-                setScaleLevels(1f, 2f, 3f)
+                setScaleLevels(1f, 2f, 5f)
                 setOnDoubleTapListener(
                     object : GestureDetector.SimpleOnGestureListener() {
                         override fun onDoubleTap(e: MotionEvent): Boolean {

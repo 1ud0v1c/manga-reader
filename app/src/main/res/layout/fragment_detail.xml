@@ -22,8 +22,9 @@
         app:layout_constraintLeft_toLeftOf="@id/image_view_manga_cover">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:padding="@dimen/activity_vertical_little_margin">
 
@@ -55,7 +56,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:gravity="right"
@@ -63,11 +64,18 @@
             tools:ignore="RtlHardcoded">
 
             <ImageView
+                android:id="@+id/image_view_favorite"
+                style="@style/MaterialImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite_empty"
+                tools:ignore="RtlSymmetry" />
+
+            <ImageView
                 android:id="@+id/image_view_download"
                 style="@style/MaterialImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/activity_vertical_little_margin"
                 android:src="@drawable/ic_download" />
 
         </LinearLayout>

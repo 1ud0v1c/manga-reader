@@ -6,12 +6,18 @@
     <string name="bottom_navigation_view_favorite">Favorite</string>
 
     <!-- ListFragment -->
+    <string name="list_fragment_title">Popular Manga</string>
     <string name="list_fragment_item_score">Score: %.2f</string>
 
     <!-- DetailFragment -->
+    <string name="detail_fragment_title">Manga Detail</string>
     <string name="detail_fragment_number_of_chapters">%d chapters</string>
     <string name="detail_fragment_item_date">Added: %s</string>
 
     <!-- ReaderFragment -->
+    <string name="reader_fragment_title">Reading Manga</string>
     <string name="reader_fragment_progression">%d/%d</string>
+
+    <!-- FavoriteFragment -->
+    <string name="favorite_fragment_title">Favorite Manga</string>
 </resources>

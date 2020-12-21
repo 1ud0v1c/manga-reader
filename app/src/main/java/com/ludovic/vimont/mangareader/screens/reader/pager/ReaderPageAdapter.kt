@@ -1,4 +1,4 @@
-package com.ludovic.vimont.mangareader.screens.reader
+package com.ludovic.vimont.mangareader.screens.reader.pager
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

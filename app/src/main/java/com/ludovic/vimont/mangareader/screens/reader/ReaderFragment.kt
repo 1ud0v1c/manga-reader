@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentReaderBinding
 import com.ludovic.vimont.mangareader.entities.Chapter
+import com.ludovic.vimont.mangareader.screens.reader.pager.ReaderPageAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReaderFragment : Fragment() {

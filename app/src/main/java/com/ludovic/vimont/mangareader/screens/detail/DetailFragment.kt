@@ -19,6 +19,7 @@ import com.ludovic.vimont.mangareader.entities.ReadingPage
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment: Fragment() {
+    private var isFavorite: Boolean = false
     private val detailGenreAdapter = DetailGenreAdapter(ArrayList())
     private val detailChapterAdapter = DetailChapterAdapter(ArrayList())
     private lateinit var binding: FragmentDetailBinding
@@ -32,15 +33,24 @@ class DetailFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupDownloadAction()
+        setupActions()
         configureRecyclerViews()
         configureViewModel()
     }
 
-    private fun setupDownloadAction() {
+    private fun setupActions() {
         with(binding) {
             imageViewDownload.setOnClickListener {
                 viewModel.downloadChapters(detailChapterAdapter.getItems())
+            }
+            // TODO: add favorite action
+            imageViewFavorite.setOnClickListener {
+                if (isFavorite) {
+                    imageViewFavorite.setImageResource(R.drawable.ic_favorite_empty)
+                } else {
+                    imageViewFavorite.setImageResource(R.drawable.ic_favorite_full)
+                }
+                isFavorite = !isFavorite
             }
         }
     }
