@@ -1,4 +1,4 @@
-package com.ludovic.vimont.mangareader.helper
+package com.ludovic.vimont.mangareader.api
 
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -7,14 +7,18 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import com.bumptech.glide.RequestManager
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.io.OutputStream
 
-object FileHelper {
-    @Throws(IOException::class)
-    fun saveImage(contentResolver: ContentResolver, bitmap: Bitmap, folder: String, name: String) {
+class FileDownloader(private val glide: RequestManager,
+                     private val contentResolver: ContentResolver) {
+    fun downloadBitmap(url: String): Bitmap {
+        return glide.asBitmap().load(url).submit().get()
+    }
+
+    fun saveImage(bitmap: Bitmap, folder: String, name: String) {
         val fileOutputStream: OutputStream? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val contentValues = ContentValues()
             contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "$name.jpg")

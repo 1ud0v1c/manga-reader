@@ -1,35 +1,20 @@
 package com.ludovic.vimont.mangareader.screens.detail
 
-import android.content.ContentResolver
-import android.content.ContentValues
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
-import androidx.annotation.NonNull
-import com.bumptech.glide.RequestManager
+import com.ludovic.vimont.mangareader.api.FileDownloader
 import com.ludovic.vimont.mangareader.api.JikanAPI
 import com.ludovic.vimont.mangareader.api.MangaReaderAPI
 import com.ludovic.vimont.mangareader.db.MangaDao
 import com.ludovic.vimont.mangareader.entities.*
-import com.ludovic.vimont.mangareader.helper.FileHelper
 import org.jsoup.HttpStatusException
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import retrofit2.Response
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
-import java.util.*
 import kotlin.collections.ArrayList
 
 class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
                            private val mangaDao: MangaDao,
-                           private val glide: RequestManager,
-                           private val contentResolver: ContentResolver): DetailRepository {
+                           private val fileDownloader: FileDownloader): DetailRepository {
     override suspend fun fetchMangaContent(mangaId: String): ReadingPage {
         var manga: FullManga? = null
         val response: Response<FullManga> = jikanAPI.getManga(mangaId)
@@ -97,6 +82,7 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
 
     override suspend fun downloadChapters(chapters: List<LinkChapter>) {
         for (chapter in chapters) {
+            println(chapter)
             try {
                 val document: Document = MangaReaderAPI.getDocument(chapter.link)
                 val scripts: Elements = document.select("script")
@@ -105,8 +91,8 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
                     MangaReaderAPI.convertJsonToChapter(jsonContent)?.let { chapter: Chapter ->
                         for (image in chapter.images) {
                             try {
-                                val bitmap = glide.asBitmap().load(image.getURL()).submit().get()
-                                FileHelper.saveImage(contentResolver, bitmap, "${chapter.name}/${chapter.currentChapter}","${image.page}")
+                                val bitmap = fileDownloader.downloadBitmap(image.getURL())
+                                fileDownloader.saveImage(bitmap, "${chapter.name}/${chapter.currentChapter}","${image.page}")
                             } catch(e: Exception) {
                                 println("Exception for ${image.getURL()}: ${e.message}")
                             }

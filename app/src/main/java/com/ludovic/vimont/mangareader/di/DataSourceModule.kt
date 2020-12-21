@@ -1,6 +1,7 @@
 package com.ludovic.vimont.mangareader.di
 
 import com.bumptech.glide.Glide
+import com.ludovic.vimont.mangareader.api.FileDownloader
 import com.ludovic.vimont.mangareader.api.JikanAPI
 import com.ludovic.vimont.mangareader.api.MangaReaderAPI
 import com.ludovic.vimont.mangareader.api.RetrofitBuilder
@@ -34,6 +35,9 @@ object DataSourceModule {
         single {
             Glide.with(androidContext())
         }
+        factory {
+            FileDownloader(get(), get())
+        }
     }
 
     private fun Module.buildDatabase() {
@@ -50,7 +54,7 @@ object DataSourceModule {
             ListRepositoryImpl(get(), get())
         }
         factory {
-            DetailRepositoryImpl(get(), get(), get(), get())
+            DetailRepositoryImpl(get(), get(), get())
         }
         factory {
             ReaderRepositoryImpl()
