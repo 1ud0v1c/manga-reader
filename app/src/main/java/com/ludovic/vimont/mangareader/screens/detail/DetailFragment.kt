@@ -87,6 +87,10 @@ class DetailFragment: Fragment() {
                         .into(imageViewMangaCover)
                     textViewNumberOfChapters.text = it.getString(R.string.detail_fragment_number_of_chapters, page.chapters.size)
                 }
+                if (page.isFavorite) {
+                    imageViewFavorite.setImageResource(R.drawable.ic_favorite_full)
+                    isFavorite = page.isFavorite
+                }
                 val genres = if (page.genres.size >= 3) page.genres.subList(0, 3) else page.genres
                 detailGenreAdapter.setItems(genres)
                 detailChapterAdapter.setItems(page.chapters)

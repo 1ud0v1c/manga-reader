@@ -40,6 +40,10 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.ludovic.vimont.mangareader.screens.favorite.FavoriteFragment"
-        android:label="@string/favorite_fragment_title" />
+        android:label="@string/favorite_fragment_title" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 
 </navigation>

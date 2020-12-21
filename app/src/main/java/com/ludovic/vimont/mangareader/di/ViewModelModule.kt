@@ -2,6 +2,8 @@ package com.ludovic.vimont.mangareader.di
 
 import com.ludovic.vimont.mangareader.screens.detail.DetailRepositoryImpl
 import com.ludovic.vimont.mangareader.screens.detail.DetailViewModel
+import com.ludovic.vimont.mangareader.screens.favorite.FavoriteRepositoryImpl
+import com.ludovic.vimont.mangareader.screens.favorite.FavoriteViewModel
 import com.ludovic.vimont.mangareader.screens.list.ListRepositoryImpl
 import com.ludovic.vimont.mangareader.screens.list.ListViewModel
 import com.ludovic.vimont.mangareader.screens.reader.ReaderRepositoryImpl
@@ -20,6 +22,9 @@ object ViewModelModule {
         }
         viewModel {
             ReaderViewModel(get<ReaderRepositoryImpl>())
+        }
+        viewModel {
+            FavoriteViewModel(get<FavoriteRepositoryImpl>())
         }
     }
 }

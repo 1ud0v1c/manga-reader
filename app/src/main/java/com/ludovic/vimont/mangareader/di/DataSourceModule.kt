@@ -6,6 +6,7 @@ import com.ludovic.vimont.mangareader.api.MangaReaderAPI
 import com.ludovic.vimont.mangareader.api.RetrofitBuilder
 import com.ludovic.vimont.mangareader.db.MangaReaderDatabase
 import com.ludovic.vimont.mangareader.screens.detail.DetailRepositoryImpl
+import com.ludovic.vimont.mangareader.screens.favorite.FavoriteRepositoryImpl
 import com.ludovic.vimont.mangareader.screens.list.ListRepositoryImpl
 import com.ludovic.vimont.mangareader.screens.reader.ReaderRepositoryImpl
 import org.koin.android.ext.koin.androidContext
@@ -53,6 +54,9 @@ object DataSourceModule {
         }
         factory {
             ReaderRepositoryImpl()
+        }
+        factory {
+            FavoriteRepositoryImpl(get())
         }
     }
 }

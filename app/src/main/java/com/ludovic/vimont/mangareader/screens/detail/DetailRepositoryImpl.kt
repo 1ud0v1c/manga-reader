@@ -40,13 +40,15 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
         }
 
         manga?.let {
+            val isFavorite = mangaDao.get(mangaId).isFavorite
             val document: Document = getDocument(manga)
             val tables: Elements = document.select("table")
             if (tables.isNotEmpty()) {
                 val chapters = getChapters(tables.last())
                 return ReadingPage(
                     it.id, it.title, it.synopsis, it.published.from, it.status,
-                    it.authors.first().name, it.genres.map { genre: Genre -> genre.name }, chapters
+                    it.authors.first().name, it.genres.map { genre: Genre -> genre.name }, chapters,
+                    isFavorite
                 )
             }
         }
@@ -118,10 +120,10 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
     }
 
     override suspend fun addToFavorite(mangaId: String) {
-        // TODO:
+        mangaDao.updateFavorite(mangaId, true)
     }
 
     override suspend fun removeFromFavorite(mangaId: String) {
-        // TODO:
+        mangaDao.updateFavorite(mangaId, false)
     }
 }

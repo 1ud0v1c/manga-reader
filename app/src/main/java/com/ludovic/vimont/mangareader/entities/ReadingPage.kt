@@ -7,4 +7,5 @@ data class ReadingPage(val id: String,
                        val status: String,
                        val author: String,
                        val genres: List<String>,
-                       val chapters: List<LinkChapter>)
+                       val chapters: List<LinkChapter>,
+                       val isFavorite: Boolean = false)
