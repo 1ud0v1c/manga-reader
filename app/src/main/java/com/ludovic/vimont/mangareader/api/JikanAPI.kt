@@ -17,7 +17,6 @@ interface JikanAPI {
     @GET("top/manga/1/bypopularity")
     suspend fun getPopularMangas(): Response<JikanResponse>
 
-    // TODO: response entity ?
     @GET("manga/{manga_id}")
     suspend fun getManga(@Path("manga_id") mangaId: String): Response<FullManga>
 }

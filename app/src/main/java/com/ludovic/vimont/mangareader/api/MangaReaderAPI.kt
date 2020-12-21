@@ -14,7 +14,6 @@ interface MangaReaderAPI {
         private const val BASE_URL = "https://www.mangareader.net/"
 
         fun getManga(mangaTitle: String): Document {
-            println("$mangaTitle")
             return getDocument(BASE_URL + mangaTitle)
         }
 

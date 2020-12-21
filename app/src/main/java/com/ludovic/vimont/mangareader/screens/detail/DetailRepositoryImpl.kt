@@ -12,6 +12,7 @@ import com.bumptech.glide.RequestManager
 import com.ludovic.vimont.mangareader.api.JikanAPI
 import com.ludovic.vimont.mangareader.api.MangaReaderAPI
 import com.ludovic.vimont.mangareader.entities.*
+import com.ludovic.vimont.mangareader.helper.FileHelper
 import org.jsoup.HttpStatusException
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -92,38 +93,25 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
 
     override suspend fun downloadChapters(chapters: List<LinkChapter>) {
         for (chapter in chapters) {
-            println("chapter: $chapter")
-            val document: Document = MangaReaderAPI.getDocument(chapter.link)
-            val scripts: Elements = document.select("script")
-            if (scripts.size > 1) {
-                val jsonContent: String = scripts[1].data().replace("document[\"mj\"]=", "")
-                MangaReaderAPI.convertJsonToChapter(jsonContent)?.let { chapter: Chapter ->
-                    for (image in chapter.images) {
-                        val bitmap = glide.asBitmap().load(image.getURL()).submit().get()
-                        saveImage(bitmap, "${chapter.name}/${chapter.currentChapter}","${image.page}")
+            try {
+                val document: Document = MangaReaderAPI.getDocument(chapter.link)
+                val scripts: Elements = document.select("script")
+                if (scripts.size > 1) {
+                    val jsonContent: String = scripts[1].data().replace("document[\"mj\"]=", "")
+                    MangaReaderAPI.convertJsonToChapter(jsonContent)?.let { chapter: Chapter ->
+                        for (image in chapter.images) {
+                            try {
+                                val bitmap = glide.asBitmap().load(image.getURL()).submit().get()
+                                FileHelper.saveImage(contentResolver, bitmap, "${chapter.name}/${chapter.currentChapter}","${image.page}")
+                            } catch(e: Exception) {
+                                println("Exception for ${image.getURL()}: ${e.message}")
+                            }
+                        }
                     }
                 }
+            } catch(e: Exception) {
+                println("Exception for ${chapter}: ${e.message}")
             }
         }
-    }
-
-    @Throws(IOException::class)
-    private fun saveImage(bitmap: Bitmap, folder: String, name: String) {
-        val fos: OutputStream? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val contentValues = ContentValues()
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "$name.jpg")
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/$folder/")
-            val imageUri: Uri? = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-            contentResolver.openOutputStream(Objects.requireNonNull(imageUri)!!)
-        } else {
-            val imagesDir: String =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                    .toString()
-            val image = File(imagesDir, "$name.jpg")
-            FileOutputStream(image)
-        }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-        Objects.requireNonNull(fos)?.close()
     }
 }
