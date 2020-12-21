@@ -1,4 +1,4 @@
-package com.ludovic.vimont.mangareader.screens.detail
+package com.ludovic.vimont.mangareader.screens.detail.adapter
 
 import android.view.LayoutInflater
 import android.view.View

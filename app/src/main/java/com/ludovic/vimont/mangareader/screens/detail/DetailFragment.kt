@@ -15,6 +15,8 @@ import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
 import com.ludovic.vimont.mangareader.entities.LinkChapter
 import com.ludovic.vimont.mangareader.entities.ReadingPage
+import com.ludovic.vimont.mangareader.screens.detail.adapter.DetailChapterAdapter
+import com.ludovic.vimont.mangareader.screens.detail.adapter.DetailGenreAdapter
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
