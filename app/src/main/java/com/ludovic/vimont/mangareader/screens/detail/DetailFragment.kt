@@ -20,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment: Fragment() {
     private var isFavorite: Boolean = false
+    private var readingPage: ReadingPage? = null
     private val detailGenreAdapter = DetailGenreAdapter(ArrayList())
     private val detailChapterAdapter = DetailChapterAdapter(ArrayList())
     private lateinit var binding: FragmentDetailBinding
@@ -43,12 +44,17 @@ class DetailFragment: Fragment() {
             imageViewDownload.setOnClickListener {
                 viewModel.downloadChapters(detailChapterAdapter.getItems())
             }
-            // TODO: add favorite action
             imageViewFavorite.setOnClickListener {
                 if (isFavorite) {
                     imageViewFavorite.setImageResource(R.drawable.ic_favorite_empty)
+                    readingPage?.let {
+                        viewModel.removeFromFavorite(it.id)
+                    }
                 } else {
                     imageViewFavorite.setImageResource(R.drawable.ic_favorite_full)
+                    readingPage?.let {
+                        viewModel.addToFavorite(it.id)
+                    }
                 }
                 isFavorite = !isFavorite
             }
@@ -84,6 +90,7 @@ class DetailFragment: Fragment() {
                 val genres = if (page.genres.size >= 3) page.genres.subList(0, 3) else page.genres
                 detailGenreAdapter.setItems(genres)
                 detailChapterAdapter.setItems(page.chapters)
+                readingPage = page
             }
         })
     }

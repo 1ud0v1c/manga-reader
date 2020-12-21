@@ -11,6 +11,7 @@ import androidx.annotation.NonNull
 import com.bumptech.glide.RequestManager
 import com.ludovic.vimont.mangareader.api.JikanAPI
 import com.ludovic.vimont.mangareader.api.MangaReaderAPI
+import com.ludovic.vimont.mangareader.db.MangaDao
 import com.ludovic.vimont.mangareader.entities.*
 import com.ludovic.vimont.mangareader.helper.FileHelper
 import org.jsoup.HttpStatusException
@@ -26,6 +27,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
+                           private val mangaDao: MangaDao,
                            private val glide: RequestManager,
                            private val contentResolver: ContentResolver): DetailRepository {
     override suspend fun fetchMangaContent(mangaId: String): ReadingPage {
@@ -43,13 +45,13 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
             if (tables.isNotEmpty()) {
                 val chapters = getChapters(tables.last())
                 return ReadingPage(
-                    it.title, it.synopsis, it.published.from, it.status,
+                    it.id, it.title, it.synopsis, it.published.from, it.status,
                     it.authors.first().name, it.genres.map { genre: Genre -> genre.name }, chapters
                 )
             }
         }
 
-        return ReadingPage("", "", "", "", "", ArrayList(), ArrayList())
+        return ReadingPage("", "", "", "", "", "", ArrayList(), ArrayList())
     }
 
     private fun getDocument(manga: FullManga?): Document {
@@ -113,5 +115,13 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
                 println("Exception for ${chapter}: ${e.message}")
             }
         }
+    }
+
+    override suspend fun addToFavorite(mangaId: String) {
+        // TODO:
+    }
+
+    override suspend fun removeFromFavorite(mangaId: String) {
+        // TODO:
     }
 }
