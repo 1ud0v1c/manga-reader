@@ -69,8 +69,8 @@ dependencies {
     // Jsoup for parsing HTML content
     implementation "org.jsoup:jsoup:1.13.1"
 
-    // Glide for Image loading
-    implementation "com.github.bumptech.glide:glide:$glide_version"
+    // Coil for Image loading
+    implementation "io.coil-kt:coil:$coil_version"
 
     // Kotlin coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"

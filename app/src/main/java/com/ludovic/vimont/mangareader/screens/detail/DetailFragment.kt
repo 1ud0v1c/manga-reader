@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
 import com.ludovic.vimont.mangareader.entities.LinkChapter
@@ -84,9 +84,7 @@ class DetailFragment: Fragment() {
                 textViewMangaName.text = page.name
                 textViewMangaAuthor.text = page.author
                 context?.let {
-                    Glide.with(it)
-                        .load(detailFragmentArgs.mangaCover)
-                        .into(imageViewMangaCover)
+                    imageViewMangaCover.load(detailFragmentArgs.mangaCover)
                     textViewNumberOfChapters.text = it.getString(R.string.detail_fragment_number_of_chapters, page.chapters.size)
                 }
                 if (page.isFavorite) {

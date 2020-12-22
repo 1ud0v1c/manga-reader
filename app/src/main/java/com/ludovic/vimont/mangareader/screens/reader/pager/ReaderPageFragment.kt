@@ -3,7 +3,7 @@ package com.ludovic.vimont.mangareader.screens.reader.pager
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
+import coil.load
 import com.ludovic.vimont.mangareader.databinding.FragmentPageBinding
 import com.ludovic.vimont.mangareader.entities.ChapterPage
 
@@ -14,7 +14,7 @@ class ReaderPageFragment : Fragment() {
         fun newInstance(chapterPage: ChapterPage): ReaderPageFragment {
             val readerPageFragment = ReaderPageFragment()
             val args = Bundle()
-            args.putString(KEY_IMAGE_URL, chapterPage.getURL())
+            args.putString(KEY_IMAGE_URL, chapterPage.link)
             readerPageFragment.arguments = args
             return readerPageFragment
         }
@@ -35,9 +35,7 @@ class ReaderPageFragment : Fragment() {
         with(binding) {
             context?.let {
                 val imageURL: String = requireArguments().getString(KEY_IMAGE_URL, "")
-                Glide.with(it)
-                    .load(imageURL)
-                    .into(photoViewCurrentPage)
+                photoViewCurrentPage.load(imageURL)
             }
             with(photoViewCurrentPage) {
                 setZoomTransitionDuration(300)

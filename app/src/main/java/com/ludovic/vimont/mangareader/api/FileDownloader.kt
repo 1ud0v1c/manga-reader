@@ -3,19 +3,27 @@ package com.ludovic.vimont.mangareader.api
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import com.bumptech.glide.RequestManager
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 
-class FileDownloader(private val glide: RequestManager,
+class FileDownloader(private val imageLoader: ImageLoader,
+                     private val imageRequestBuilder: ImageRequest.Builder,
                      private val contentResolver: ContentResolver) {
-    fun downloadBitmap(url: String): Bitmap {
-        return glide.asBitmap().load(url).submit().get()
+    suspend fun downloadBitmap(url: String): Bitmap {
+        val request = imageRequestBuilder.data(url)
+            .allowHardware(false)
+            .build()
+        val result = (imageLoader.execute(request) as SuccessResult).drawable
+        return (result as BitmapDrawable).bitmap
     }
 
     fun saveImage(bitmap: Bitmap, folder: String, name: String) {

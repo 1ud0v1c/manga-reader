@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.entities.Manga
 import kotlin.collections.ArrayList
@@ -26,9 +26,7 @@ class ListAdapter(private val mangas: ArrayList<Manga>): RecyclerView.Adapter<Li
             val context: Context = itemView.context
             textViewTitle.text = manga.title
             textViewScore.text = context.getString(R.string.list_fragment_item_score, manga.score)
-            Glide.with(context)
-                .load(manga.cover)
-                .into(imageViewCover)
+            imageViewCover.load(manga.cover)
             itemView.setOnClickListener {
                 onItemClick?.invoke(manga)
             }

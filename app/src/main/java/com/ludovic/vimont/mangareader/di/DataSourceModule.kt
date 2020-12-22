@@ -1,10 +1,8 @@
 package com.ludovic.vimont.mangareader.di
 
-import com.bumptech.glide.Glide
-import com.ludovic.vimont.mangareader.api.FileDownloader
-import com.ludovic.vimont.mangareader.api.JikanAPI
-import com.ludovic.vimont.mangareader.api.MangaReaderAPI
-import com.ludovic.vimont.mangareader.api.RetrofitBuilder
+import coil.ImageLoader
+import coil.request.ImageRequest
+import com.ludovic.vimont.mangareader.api.*
 import com.ludovic.vimont.mangareader.db.MangaReaderDatabase
 import com.ludovic.vimont.mangareader.screens.detail.DetailRepositoryImpl
 import com.ludovic.vimont.mangareader.screens.favorite.FavoriteRepositoryImpl
@@ -33,10 +31,19 @@ object DataSourceModule {
             RetrofitBuilder.buildRetrofitForAPI(JikanAPI.BASE_URL, JikanAPI::class.java)
         }
         single {
-            Glide.with(androidContext())
+            ImageLoader(androidContext())
+        }
+        single {
+            ImageRequest.Builder(androidContext())
+        }
+        single {
+            MangaReaderAPI(get())
+        }
+        single {
+            MangakakalotAPI(get())
         }
         factory {
-            FileDownloader(get(), get())
+            FileDownloader(get(), get(), get())
         }
     }
 
@@ -54,10 +61,10 @@ object DataSourceModule {
             ListRepositoryImpl(get(), get())
         }
         factory {
-            DetailRepositoryImpl(get(), get(), get())
+            DetailRepositoryImpl(get(), get<MangakakalotAPI>(), get(), get())
         }
         factory {
-            ReaderRepositoryImpl()
+            ReaderRepositoryImpl(get<MangakakalotAPI>())
         }
         factory {
             FavoriteRepositoryImpl(get())
