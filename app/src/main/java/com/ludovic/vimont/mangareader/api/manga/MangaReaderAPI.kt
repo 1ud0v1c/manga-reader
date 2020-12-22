@@ -1,5 +1,6 @@
-package com.ludovic.vimont.mangareader.api
+package com.ludovic.vimont.mangareader.api.manga
 
+import com.ludovic.vimont.mangareader.api.MangaAPI
 import com.ludovic.vimont.mangareader.db.MangaDao
 import com.ludovic.vimont.mangareader.entities.*
 import com.squareup.moshi.Moshi

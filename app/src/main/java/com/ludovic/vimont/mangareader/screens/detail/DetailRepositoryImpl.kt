@@ -1,6 +1,6 @@
 package com.ludovic.vimont.mangareader.screens.detail
 
-import com.ludovic.vimont.mangareader.api.FileDownloader
+import com.ludovic.vimont.mangareader.api.images.FileDownloader
 import com.ludovic.vimont.mangareader.api.JikanAPI
 import com.ludovic.vimont.mangareader.api.MangaAPI
 import com.ludovic.vimont.mangareader.db.MangaDao
@@ -11,7 +11,8 @@ import kotlin.collections.ArrayList
 class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
                            private val mangaAPI: MangaAPI,
                            private val mangaDao: MangaDao,
-                           private val fileDownloader: FileDownloader): DetailRepository {
+                           private val fileDownloader: FileDownloader
+): DetailRepository {
     override suspend fun fetchMangaContent(mangaId: String): ReadingPage {
         var manga: FullManga? = null
         val response: Response<FullManga> = jikanAPI.getManga(mangaId)

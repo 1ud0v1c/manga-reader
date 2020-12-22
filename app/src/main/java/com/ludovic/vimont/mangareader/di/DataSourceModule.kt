@@ -3,6 +3,10 @@ package com.ludovic.vimont.mangareader.di
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.ludovic.vimont.mangareader.api.*
+import com.ludovic.vimont.mangareader.api.images.CoilImageLoader
+import com.ludovic.vimont.mangareader.api.images.FileDownloader
+import com.ludovic.vimont.mangareader.api.manga.MangaReaderAPI
+import com.ludovic.vimont.mangareader.api.manga.MangakakalotAPI
 import com.ludovic.vimont.mangareader.db.MangaReaderDatabase
 import com.ludovic.vimont.mangareader.screens.detail.DetailRepositoryImpl
 import com.ludovic.vimont.mangareader.screens.favorite.FavoriteRepositoryImpl
@@ -31,19 +35,22 @@ object DataSourceModule {
             RetrofitBuilder.buildRetrofitForAPI(JikanAPI.BASE_URL, JikanAPI::class.java)
         }
         single {
+            MangaReaderAPI(get())
+        }
+        single {
+            MangakakalotAPI(get())
+        }
+        single {
             ImageLoader(androidContext())
         }
         single {
             ImageRequest.Builder(androidContext())
         }
         single {
-            MangaReaderAPI(get())
-        }
-        single {
-            MangakakalotAPI(get())
+            CoilImageLoader(get(), get())
         }
         factory {
-            FileDownloader(get(), get(), get())
+            FileDownloader(get<CoilImageLoader>(), get())
         }
     }
 
