@@ -50,6 +50,10 @@ class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
     override suspend fun fromLinkToChapter(chapterLink: String): Chapter? {
         try {
             val document: Document = MangaReaderAPI.getDocument(chapterLink)
+            val breadcrumb = document.select(".panel-breadcrumb").first()
+            val breadcrumbLinks = breadcrumb.select("a")
+            val name = if (breadcrumbLinks.isNotEmpty()) breadcrumbLinks[1].text() else ""
+            val currentChapter = chapterLink.split("/").last().split("_").last().toInt()
             val container = document.select(".container-chapter-reader").first()
             val images: Elements = container.select("img")
             val chapterPages = ArrayList<ChapterPage>()
@@ -57,7 +61,7 @@ class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
                 val imageSrc = image.attr("src")
                 chapterPages.add(ChapterPage(images.indexOf(image), imageSrc))
             }
-            return Chapter(1, chapterPages, "","", "", "")
+            return Chapter(currentChapter, chapterPages, name,"", "", "")
         } catch(e: Exception) {
             println("Exception for ${chapterLink}: ${e.message}")
         }

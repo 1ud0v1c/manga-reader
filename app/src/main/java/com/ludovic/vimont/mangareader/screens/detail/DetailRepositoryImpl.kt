@@ -11,8 +11,7 @@ import kotlin.collections.ArrayList
 class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
                            private val mangaAPI: MangaAPI,
                            private val mangaDao: MangaDao,
-                           private val fileDownloader: FileDownloader
-): DetailRepository {
+                           private val fileDownloader: FileDownloader): DetailRepository {
     override suspend fun fetchMangaContent(mangaId: String): ReadingPage {
         var manga: FullManga? = null
         val response: Response<FullManga> = jikanAPI.getManga(mangaId)
@@ -34,8 +33,12 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
             mangaAPI.fromLinkToChapter(linkChapter.link)?.let { chapter: Chapter ->
                 for (image in chapter.images) {
                     try {
-                        val bitmap = fileDownloader.downloadBitmap(image.link)
-                        fileDownloader.saveImage(bitmap, "${chapter.name}/${chapter.currentChapter}","${image.page}")
+                        val folder = "${chapter.name}/${chapter.currentChapter}"
+                        val file = "${image.page}"
+                        if (!fileDownloader.fileExists(folder, file)) {
+                            val bitmap = fileDownloader.downloadBitmap(image.link)
+                            fileDownloader.saveImage(bitmap, folder, file)
+                        }
                     } catch(e: Exception) {
                         println("Exception for ${image.link}: ${e.message}")
                     }

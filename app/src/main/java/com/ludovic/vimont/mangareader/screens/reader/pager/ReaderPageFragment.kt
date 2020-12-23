@@ -5,16 +5,13 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import coil.load
 import coil.request.ImageRequest
+import com.ludovic.vimont.mangareader.api.MangaAPI
 import com.ludovic.vimont.mangareader.databinding.FragmentPageBinding
 import com.ludovic.vimont.mangareader.entities.ChapterPage
 
 class ReaderPageFragment : Fragment() {
     companion object {
         private const val KEY_IMAGE_URL = "KEY_IMAGE_URL"
-        private val headers = mapOf(
-            "Referer" to "https://manganelo.com/chapter/kxqh9261558062112/chapter_1",
-            "User-Agent" to "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
-        )
 
         fun newInstance(chapterPage: ChapterPage): ReaderPageFragment {
             val readerPageFragment = ReaderPageFragment()
@@ -41,7 +38,7 @@ class ReaderPageFragment : Fragment() {
             context?.let {
                 val imageURL: String = requireArguments().getString(KEY_IMAGE_URL, "")
                 photoViewCurrentPage.load(imageURL) {
-                    for ((key, value) in headers) {
+                    for ((key, value) in MangaAPI.headers) {
                         addHeader(key, value)
                     }
                 }
