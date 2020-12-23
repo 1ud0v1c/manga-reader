@@ -41,7 +41,7 @@ object DataSourceModule {
             MangakakalotAPI(get())
         }
         single {
-            ImageLoader(androidContext())
+            ImageLoader.Builder(androidContext()).build()
         }
         single {
             ImageRequest.Builder(androidContext())

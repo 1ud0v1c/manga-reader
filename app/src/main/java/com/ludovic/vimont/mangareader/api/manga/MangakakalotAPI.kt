@@ -21,7 +21,7 @@ class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
         }
     }
 
-    override suspend fun fromMangaToReadingPage(fullManga: FullManga): ReadingPage? {
+    override suspend fun fromMangaToDetailPage(fullManga: FullManga): ReadingPage? {
         val document: Document = searchManga(fullManga.getWebTitle())
         val results: Elements = document.select(".story_item")
         if (results.isNotEmpty()) {
@@ -47,7 +47,7 @@ class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
         return null
     }
 
-    override suspend fun fromLinkChapterToChapter(chapterLink: String): Chapter? {
+    override suspend fun fromLinkToChapter(chapterLink: String): Chapter? {
         try {
             val document: Document = MangaReaderAPI.getDocument(chapterLink)
             val container = document.select(".container-chapter-reader").first()

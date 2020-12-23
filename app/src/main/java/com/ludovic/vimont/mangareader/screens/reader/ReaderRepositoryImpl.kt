@@ -5,6 +5,6 @@ import com.ludovic.vimont.mangareader.entities.Chapter
 
 class ReaderRepositoryImpl(private val mangaAPI: MangaAPI): ReaderRepository {
     override suspend fun loadChapter(chapterLink: String): Chapter? {
-        return mangaAPI.fromLinkChapterToChapter(chapterLink)
+        return mangaAPI.fromLinkToChapter(chapterLink)
     }
 }

@@ -38,7 +38,7 @@ class MangaReaderAPI(private val mangaDao: MangaDao): MangaAPI {
         }
     }
 
-    override suspend fun fromMangaToReadingPage(fullManga: FullManga): ReadingPage? {
+    override suspend fun fromMangaToDetailPage(fullManga: FullManga): ReadingPage? {
         val isFavorite = mangaDao.get(fullManga.id).isFavorite
         val document: Document = getDocument(fullManga)
         val tables: Elements = document.select("table")
@@ -86,7 +86,7 @@ class MangaReaderAPI(private val mangaDao: MangaDao): MangaAPI {
         return chapters
     }
 
-    override suspend fun fromLinkChapterToChapter(chapterLink: String): Chapter? {
+    override suspend fun fromLinkToChapter(chapterLink: String): Chapter? {
         try {
             val document: Document = getDocument(chapterLink)
             val scripts: Elements = document.select("script")

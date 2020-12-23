@@ -22,7 +22,7 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
             }
         }
         manga?.let { fullManga ->
-            mangaAPI.fromMangaToReadingPage(fullManga)?.let {
+            mangaAPI.fromMangaToDetailPage(fullManga)?.let {
                 return it
             }
         }
@@ -31,7 +31,7 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
 
     override suspend fun downloadChapters(chapters: List<LinkChapter>) {
         for (linkChapter in chapters) {
-            mangaAPI.fromLinkChapterToChapter(linkChapter.link)?.let { chapter: Chapter ->
+            mangaAPI.fromLinkToChapter(linkChapter.link)?.let { chapter: Chapter ->
                 for (image in chapter.images) {
                     try {
                         val bitmap = fileDownloader.downloadBitmap(image.link)

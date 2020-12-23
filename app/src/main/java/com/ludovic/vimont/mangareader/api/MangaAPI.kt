@@ -5,7 +5,7 @@ import com.ludovic.vimont.mangareader.entities.FullManga
 import com.ludovic.vimont.mangareader.entities.ReadingPage
 
 interface MangaAPI {
-    suspend fun fromMangaToReadingPage(fullManga: FullManga): ReadingPage?
+    suspend fun fromMangaToDetailPage(fullManga: FullManga): ReadingPage?
 
-    suspend fun fromLinkChapterToChapter(chapterLink: String): Chapter?
+    suspend fun fromLinkToChapter(chapterLink: String): Chapter?
 }
