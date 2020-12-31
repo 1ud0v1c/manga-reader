@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
@@ -25,6 +26,10 @@ class ReaderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentReaderBinding.inflate(inflater, container, false)
+        activity?.let {
+            (activity as? AppCompatActivity)?.supportActionBar?.title =
+                getString(R.string.reader_fragment_title, readFragmentArgs.chapterTitle)
+        }
         pageAdapter = ReaderPageAdapter(ArrayList(), this)
         return binding.root
     }

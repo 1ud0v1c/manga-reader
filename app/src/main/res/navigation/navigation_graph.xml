@@ -15,8 +15,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.ludovic.vimont.mangareader.screens.detail.DetailFragment"
-        android:label="@string/detail_fragment_title">
+        android:name="com.ludovic.vimont.mangareader.screens.detail.DetailFragment">
         <argument
             android:name="manga_id"
             app:argType="string" />
@@ -30,8 +29,10 @@
 
     <fragment
         android:id="@+id/readerFragment"
-        android:name="com.ludovic.vimont.mangareader.screens.reader.ReaderFragment"
-        android:label="@string/reader_fragment_title">
+        android:name="com.ludovic.vimont.mangareader.screens.reader.ReaderFragment">
+        <argument
+            android:name="chapter_title"
+            app:argType="string" />
         <argument
             android:name="chapter_link"
             app:argType="string" />
@@ -40,7 +41,7 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.ludovic.vimont.mangareader.screens.favorite.FavoriteFragment"
-        android:label="@string/favorite_fragment_title" >
+        android:label="@string/favorite_fragment_title">
         <action
             android:id="@+id/action_favoriteFragment_to_detailFragment"
             app:destination="@id/detailFragment" />

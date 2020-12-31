@@ -5,6 +5,8 @@ import com.ludovic.vimont.mangareader.entities.Manga
 import com.ludovic.vimont.mangareader.entities.ReadingPage
 
 interface DetailRepository {
+    suspend fun fetchMangaName(mangaId: String): String
+
     suspend fun fetchMangaContent(mangaId: String): ReadingPage
 
     suspend fun downloadChapters(chapters: List<LinkChapter>)

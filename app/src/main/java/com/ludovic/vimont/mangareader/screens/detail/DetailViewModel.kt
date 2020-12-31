@@ -10,7 +10,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 class DetailViewModel(private val detailRepository: DetailRepository): ViewModel() {
+    val mangaName = MutableLiveData<String>()
     val readingPage = MutableLiveData<ReadingPage>()
+
+    fun fetchMangaName(mangaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val loadedTitle: String = detailRepository.fetchMangaName(mangaId)
+            mangaName.postValue(loadedTitle)
+        }
+    }
 
     fun fetchMangaContent(mangaId: String) {
         viewModelScope.launch(Dispatchers.Default) {

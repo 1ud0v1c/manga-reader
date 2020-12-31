@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -72,12 +73,19 @@ class DetailFragment: Fragment() {
         recyclerViewChapters.adapter = detailChapterAdapter
         recyclerViewChapters.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         detailChapterAdapter.onItemClick = { linkChapter: LinkChapter ->
-            val action: NavDirections = DetailFragmentDirections.actionDetailFragmentToReaderFragment(linkChapter.link)
+            val action: NavDirections = DetailFragmentDirections.actionDetailFragmentToReaderFragment(linkChapter.title, linkChapter.link)
             findNavController().navigate(action)
         }
     }
 
     private fun configureViewModel() {
+        viewModel.fetchMangaName(detailFragmentArgs.mangaId)
+        viewModel.mangaName.observe(viewLifecycleOwner, { title: String ->
+            activity?.let {
+                (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.detail_fragment_title, title)
+            }
+        })
+
         viewModel.fetchMangaContent(detailFragmentArgs.mangaId)
         viewModel.readingPage.observe(viewLifecycleOwner, { page: ReadingPage ->
             with(binding) {

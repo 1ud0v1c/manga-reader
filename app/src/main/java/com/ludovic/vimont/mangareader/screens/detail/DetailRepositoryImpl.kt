@@ -12,6 +12,10 @@ class DetailRepositoryImpl(private val jikanAPI: JikanAPI,
                            private val mangaAPI: MangaAPI,
                            private val mangaDao: MangaDao,
                            private val fileDownloader: FileDownloader): DetailRepository {
+    override suspend fun fetchMangaName(mangaId: String): String {
+        return mangaDao.get(mangaId).title
+    }
+
     override suspend fun fetchMangaContent(mangaId: String): ReadingPage {
         var manga: FullManga? = null
         val response: Response<FullManga> = jikanAPI.getManga(mangaId)
