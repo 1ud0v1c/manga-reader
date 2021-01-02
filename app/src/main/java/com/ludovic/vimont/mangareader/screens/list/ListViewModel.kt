@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 class ListViewModel(private val listRepository: ListRepository): ViewModel() {
     val mangas = MutableLiveData<List<Manga>>()
 
-    fun fetchMangas() {
+    fun fetchMangas(page: Int = 1) {
         viewModelScope.launch(Dispatchers.Default) {
-            val loadedMangas = listRepository.list()
+            val loadedMangas = listRepository.list(page)
             mangas.postValue(loadedMangas)
         }
     }

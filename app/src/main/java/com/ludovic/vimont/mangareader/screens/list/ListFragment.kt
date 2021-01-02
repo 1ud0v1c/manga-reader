@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.mangareader.databinding.FragmentListBinding
 import com.ludovic.vimont.mangareader.entities.Manga
+import com.ludovic.vimont.mangareader.ui.EndlessRecyclerViewScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment: Fragment() {
@@ -30,13 +31,20 @@ class ListFragment: Fragment() {
     }
 
     private fun configureRecyclerView() {
+        val linearLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         val recyclerView: RecyclerView = binding.recyclerViewMangas
         recyclerView.adapter = listAdapter
-        recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        recyclerView.layoutManager = linearLayoutManager
         listAdapter.onItemClick = { manga: Manga ->
             val action: NavDirections = ListFragmentDirections.actionListFragmentToDetailFragment(manga.id, manga.cover)
             findNavController().navigate(action)
         }
+        val endlessRecyclerViewScrollListener = object: EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            override fun onLoadMore(currentPage: Int) {
+                viewModel.fetchMangas(currentPage+1)
+            }
+        }
+        recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener)
     }
 
     private fun configureViewModel() {

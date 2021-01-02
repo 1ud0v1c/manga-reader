@@ -8,18 +8,23 @@ import retrofit2.Response
 
 class ListRepositoryImpl(private val jikanAPI: JikanAPI,
                          private val mangaDao: MangaDao): ListRepository {
-    override suspend fun list(): List<Manga> {
-        val cachedPhotos: List<Manga> = mangaDao.getAll()
-        if (cachedPhotos.isNotEmpty()) {
-            return cachedPhotos
+    override suspend fun list(page: Int): List<Manga> {
+        val cachedMangas: List<Manga> = mangaDao.getAll()
+        if (cachedMangas.isEmpty()) {
+            return fetchFromJikanAPI(page)
         }
-        return fetchFromJikanAPI()
+        if (cachedMangas.size >= page * JikanAPI.ITEMS_PER_PAGE) {
+            return cachedMangas.subList(0, page * JikanAPI.ITEMS_PER_PAGE)
+        }
+        val newMangasToLoad = fetchFromJikanAPI(page)
+        newMangasToLoad.addAll(0, cachedMangas)E
+        return newMangasToLoad
     }
 
-    private suspend fun fetchFromJikanAPI(): ArrayList<Manga> {
+    private suspend fun fetchFromJikanAPI(page: Int): ArrayList<Manga> {
         val mangas = ArrayList<Manga>()
         try {
-            val response: Response<JikanResponse> = jikanAPI.getPopularMangas()
+            val response: Response<JikanResponse> = jikanAPI.getPopularMangas(page)
             if (response.isSuccessful) {
                 response.body()?.let { jikanResponse: JikanResponse ->
                     val topMangs: List<Manga> = jikanResponse.top
