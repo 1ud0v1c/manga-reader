@@ -17,7 +17,7 @@ class ListRepositoryImpl(private val jikanAPI: JikanAPI,
             return cachedMangas.subList(0, page * JikanAPI.ITEMS_PER_PAGE)
         }
         val newMangasToLoad = fetchFromJikanAPI(page)
-        newMangasToLoad.addAll(0, cachedMangas)E
+        newMangasToLoad.addAll(0, cachedMangas)
         return newMangasToLoad
     }
 
