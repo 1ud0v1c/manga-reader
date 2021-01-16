@@ -7,6 +7,8 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
     companion object {
@@ -53,7 +55,7 @@ class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
             val breadcrumb = document.select(".panel-breadcrumb").first()
             val breadcrumbLinks = breadcrumb.select("a")
             val name = if (breadcrumbLinks.isNotEmpty()) breadcrumbLinks[1].text() else ""
-            val currentChapter = chapterLink.split("/").last().split("_").last().toInt()
+            val currentChapter = chapterLink.split("/").last().split("_").last()
             val container = document.select(".container-chapter-reader").first()
             val images: Elements = container.select("img")
             val chapterPages = ArrayList<ChapterPage>()
@@ -63,9 +65,17 @@ class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
             }
             val linksContainer = document.select(".navi-change-chapter-btn").first()
             val links = linksContainer.select("a")
-            val previous = links.first().attr("href") ?: ""
-            val next = if (links.size > 1) links.last().attr("href") else ""
-            return Chapter(currentChapter, chapterPages, name,previous, next, "")
+            var previous = ""
+            var next = ""
+            for (link in links) {
+                if (link.text().toLowerCase(Locale.getDefault()).contains("prev")) {
+                    previous = link.attr("href")
+                }
+                if (link.text().toLowerCase(Locale.getDefault()).contains("next")) {
+                    next = link.attr("href")
+                }
+            }
+            return Chapter(currentChapter, chapterPages, name, previous, next, "")
         } catch(e: Exception) {
             println("Exception for ${chapterLink}: ${e.message}")
         }

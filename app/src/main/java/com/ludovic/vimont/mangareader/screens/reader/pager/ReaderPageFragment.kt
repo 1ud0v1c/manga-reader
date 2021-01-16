@@ -9,7 +9,7 @@ import com.ludovic.vimont.mangareader.api.MangaAPI
 import com.ludovic.vimont.mangareader.databinding.FragmentPageBinding
 import com.ludovic.vimont.mangareader.entities.ChapterPage
 
-class ReaderPageFragment : Fragment() {
+class ReaderPageFragment: Fragment() {
     companion object {
         private const val KEY_IMAGE_URL = "KEY_IMAGE_URL"
 
@@ -23,11 +23,9 @@ class ReaderPageFragment : Fragment() {
     }
     private lateinit var binding: FragmentPageBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
         binding = FragmentPageBinding.inflate(inflater, container, false)
         return binding.root
     }

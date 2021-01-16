@@ -73,8 +73,7 @@ class DetailFragment: Fragment() {
         recyclerViewChapters.adapter = detailChapterAdapter
         recyclerViewChapters.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         detailChapterAdapter.onItemClick = { linkChapter: LinkChapter ->
-            val action: NavDirections = DetailFragmentDirections
-                .actionDetailFragmentToReaderFragment(linkChapter.getCurrentChapter(), linkChapter.link)
+            val action: NavDirections = DetailFragmentDirections.actionDetailFragmentToReaderFragment(linkChapter.link)
             findNavController().navigate(action)
         }
     }

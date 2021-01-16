@@ -15,7 +15,7 @@
     <string name="detail_fragment_item_date">Added: %s</string>
 
     <!-- ReaderFragment -->
-    <string name="reader_fragment_title">%s</string>
+    <string name="reader_fragment_title">Chapter: %s</string>
     <string name="reader_fragment_progression">%d/%d</string>
 
     <!-- FavoriteFragment -->

@@ -31,9 +31,6 @@
         android:id="@+id/readerFragment"
         android:name="com.ludovic.vimont.mangareader.screens.reader.ReaderFragment">
         <argument
-            android:name="chapter_title"
-            app:argType="string" />
-        <argument
             android:name="chapter_link"
             app:argType="string" />
     </fragment>

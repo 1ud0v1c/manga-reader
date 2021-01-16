@@ -15,29 +15,35 @@ import com.ludovic.vimont.mangareader.screens.reader.pager.ReaderPageAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReaderFragment : Fragment() {
+    private var previousPageScrollState: Int = -1
     private lateinit var pageAdapter: ReaderPageAdapter
     private lateinit var binding: FragmentReaderBinding
     private val viewModel: ReaderViewModel by viewModel()
     private val readFragmentArgs: ReaderFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
         binding = FragmentReaderBinding.inflate(inflater, container, false)
-        activity?.let {
-            (activity as? AppCompatActivity)?.supportActionBar?.title =
-                getString(R.string.reader_fragment_title, readFragmentArgs.chapterTitle)
-        }
         pageAdapter = ReaderPageAdapter(ArrayList(), this)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        configureViewPager()
         configureViewModel()
+    }
+
+    private fun configureViewModel() {
+        viewModel.loadChapter(readFragmentArgs.chapterLink)
+        viewModel.chapter.observe(viewLifecycleOwner, { chapter: Chapter ->
+            activity?.let {
+                (activity as? AppCompatActivity)?.supportActionBar?.title =
+                    getString(R.string.reader_fragment_title, chapter.currentChapter.toString())
+            }
+            configureViewPager()
+            pageAdapter.setItems(chapter.images)
+        })
     }
 
     private fun configureViewPager() {
@@ -48,6 +54,28 @@ class ReaderFragment : Fragment() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
                         textViewChapterProgression.text = getProgression(position + 1)
+                    }
+
+                    override fun onPageScrollStateChanged(newState: Int) {
+                        super.onPageScrollStateChanged(newState)
+                        if (previousPageScrollState == ViewPager2.SCROLL_STATE_DRAGGING
+                            && newState == ViewPager2.SCROLL_STATE_IDLE) {
+                            if (viewPagerChapter.currentItem == 0) {
+                                viewModel.chapter.value?.let { chapter: Chapter ->
+                                    if (chapter.previous.isNotEmpty()) {
+                                        viewModel.loadChapter(chapter.previous)
+                                    }
+                                }
+                            }
+                            if (viewPagerChapter.currentItem == pageAdapter.itemCount - 1) {
+                                viewModel.chapter.value?.let { chapter: Chapter ->
+                                    if (chapter.next.isNotEmpty()) {
+                                        viewModel.loadChapter(chapter.next)
+                                    }
+                                }
+                            }
+                        }
+                        previousPageScrollState = newState
                     }
                 })
             }
@@ -62,12 +90,5 @@ class ReaderFragment : Fragment() {
             )
         }
         return ""
-    }
-
-    private fun configureViewModel() {
-        viewModel.loadChapter(readFragmentArgs.chapterLink)
-        viewModel.chapter.observe(viewLifecycleOwner, { chapter: Chapter ->
-            pageAdapter.setItems(chapter.images)
-        })
     }
 }

@@ -33,7 +33,7 @@ class ListRepositoryImpl(private val jikanAPI: JikanAPI,
                 }
             }
         } catch (exception: Exception) {
-            println(exception.message.toString())
+            println("fetchFromJikanAPI: ${exception.message.toString()}")
         }
         return mangas
     }

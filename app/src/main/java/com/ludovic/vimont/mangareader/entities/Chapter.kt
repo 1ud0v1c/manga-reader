@@ -3,7 +3,7 @@ package com.ludovic.vimont.mangareader.entities
 import com.squareup.moshi.Json
 
 data class Chapter(@field:Json(name = "cn")
-                   val currentChapter: Int,
+                   val currentChapter: String,
                    @field:Json(name = "im")
                    val images: List<ChapterPage>,
                    @field:Json(name = "mn")
