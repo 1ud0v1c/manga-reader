@@ -58,8 +58,8 @@ class MangaFreakAPI(private val mangaDao: MangaDao): MangaAPI {
             val title = document.select("h1.title").first()
             val name = title.select("a").text().toLowerCase(Locale.getDefault()).capitalize(Locale.getDefault())
             val currentChapter = chapterLink.split("/").last().split("_").last().toInt()
-            val container = document.select(".slideshow-container").first()
-            val images: Elements = container.select("img")
+            val imageContainer = document.select(".slideshow-container").first()
+            val images: Elements = imageContainer.select("img")
             val chapterPages = ArrayList<ChapterPage>()
             for (image in images) {
                 val imageSrc = image.attr("src")

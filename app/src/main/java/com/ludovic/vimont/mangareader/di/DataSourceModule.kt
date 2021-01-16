@@ -5,6 +5,7 @@ import coil.request.ImageRequest
 import com.ludovic.vimont.mangareader.api.*
 import com.ludovic.vimont.mangareader.api.images.CoilImageLoader
 import com.ludovic.vimont.mangareader.api.images.FileDownloader
+import com.ludovic.vimont.mangareader.api.manga.MangaFreakAPI
 import com.ludovic.vimont.mangareader.api.manga.MangaReaderAPI
 import com.ludovic.vimont.mangareader.api.manga.MangakakalotAPI
 import com.ludovic.vimont.mangareader.db.MangaReaderDatabase
@@ -39,6 +40,9 @@ object DataSourceModule {
         }
         single {
             MangakakalotAPI(get())
+        }
+        single {
+            MangaFreakAPI(get())
         }
         single {
             ImageLoader.Builder(androidContext()).build()

@@ -61,7 +61,11 @@ class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
                 val imageSrc = image.attr("src")
                 chapterPages.add(ChapterPage(images.indexOf(image), imageSrc))
             }
-            return Chapter(currentChapter, chapterPages, name,"", "", "")
+            val linksContainer = document.select(".navi-change-chapter-btn").first()
+            val links = linksContainer.select("a")
+            val previous = links.first().attr("href") ?: ""
+            val next = if (links.size > 1) links.last().attr("href") else ""
+            return Chapter(currentChapter, chapterPages, name,previous, next, "")
         } catch(e: Exception) {
             println("Exception for ${chapterLink}: ${e.message}")
         }
