@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MangaReader">
 
-        <activity android:name=".screens.HomeActivity">
+        <activity
+            android:name=".screens.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,5 +23,4 @@
         </activity>
 
     </application>
-
 </manifest>
