@@ -1,10 +1,13 @@
 package com.ludovic.vimont.mangareader.screens.reader.pager
 
 import android.os.Bundle
-import android.view.*
+import android.view.GestureDetector
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import coil.load
-import coil.request.ImageRequest
 import com.ludovic.vimont.mangareader.api.MangaAPI
 import com.ludovic.vimont.mangareader.databinding.FragmentPageBinding
 import com.ludovic.vimont.mangareader.entities.ChapterPage
@@ -21,12 +24,13 @@ class ReaderPageFragment: Fragment() {
             return readerPageFragment
         }
     }
-    private lateinit var binding: FragmentPageBinding
+    private var _binding: FragmentPageBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentPageBinding.inflate(inflater, container, false)
+        _binding = FragmentPageBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -58,5 +62,10 @@ class ReaderPageFragment: Fragment() {
                 )
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
