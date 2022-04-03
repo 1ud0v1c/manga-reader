@@ -10,7 +10,7 @@
       <map>
         <entry key="app/src/main/res/drawable/item_genre_background.xml" value="0.3125" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.3515625" />
-        <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.3515625" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.3515625" />
         <entry key="app/src/main/res/layout/fragment_page.xml" value="0.3515625" />
