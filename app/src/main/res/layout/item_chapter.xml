@@ -18,7 +18,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        tools:text="@tools:sample/full_names" />
 
     <TextView
         android:id="@+id/text_view_chapter_date"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textAlignment="textEnd"
-        android:textColor="@color/light_gray" />
+        android:textColor="@color/light_gray"
+        tools:text="@tools:sample/date/ddmmyy" />
 
 </LinearLayout>

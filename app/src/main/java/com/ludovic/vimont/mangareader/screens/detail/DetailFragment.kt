@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
@@ -67,13 +65,8 @@ class DetailFragment: Fragment() {
     }
 
     private fun configureRecyclerViews() {
-        val recyclerViewGenres: RecyclerView = binding.recyclerViewGenres
-        recyclerViewGenres.adapter = detailGenreAdapter
-        recyclerViewGenres.layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-
-        val recyclerViewChapters: RecyclerView = binding.recyclerViewChapters
-        recyclerViewChapters.adapter = detailChapterAdapter
-        recyclerViewChapters.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        binding.recyclerViewGenres.adapter = detailGenreAdapter
+        binding.recyclerViewChapters.adapter = detailChapterAdapter
         detailChapterAdapter.onItemClick = { linkChapter: LinkChapter ->
             val action: NavDirections = DetailFragmentDirections.actionDetailFragmentToReaderFragment(linkChapter.link)
             findNavController().navigate(action)

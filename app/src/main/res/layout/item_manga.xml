@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/activity_vertical_little_margin"
@@ -21,32 +22,34 @@
             android:layout_height="@dimen/item_manga_height"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/text_view_manga_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_little_margin"
-            app:layout_constraintBottom_toBottomOf="@+id/image_view_cover"
-            app:layout_constraintLeft_toRightOf="@+id/image_view_cover"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/item_manga_text_view_title_size"
+            app:layout_constraintBottom_toTopOf="@id/text_view_manga_score"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_view_cover"
             app:layout_constraintTop_toTopOf="@+id/image_view_cover"
-            android:orientation="vertical">
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="@tools:sample/full_names" />
 
-            <TextView
-                android:id="@+id/text_view_manga_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/item_manga_text_view_title_size" />
-
-            <TextView
-                android:id="@+id/text_view_manga_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_little_margin"
-                android:textSize="@dimen/item_manga_text_view_title_size" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/text_view_manga_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_little_margin"
+            android:textSize="@dimen/item_manga_text_view_title_size"
+            app:layout_constraintBottom_toBottomOf="@id/image_view_cover"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_view_manga_title"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_manga_title"
+            tools:text="Score: 10" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
