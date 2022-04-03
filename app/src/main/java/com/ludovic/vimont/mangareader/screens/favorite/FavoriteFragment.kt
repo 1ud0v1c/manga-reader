@@ -16,16 +16,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoriteFragment: Fragment() {
     private val listAdapter = ListAdapter(ArrayList())
-    private lateinit var binding: FragmentFavoriteBinding
     private val viewModel: FavoriteViewModel by viewModel()
 
+    private var _binding: FragmentFavoriteBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         configureRecyclerView()
         configureViewModel()
     }
@@ -42,8 +44,14 @@ class FavoriteFragment: Fragment() {
 
     private fun configureViewModel() {
         viewModel.loadFavorites()
-        viewModel.mangas.observe(viewLifecycleOwner, { mangas: List<Manga> ->
+        viewModel.mangas.observe(viewLifecycleOwner) { mangas: List<Manga> ->
             listAdapter.setItems(mangas)
-        })
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.recyclerViewFavorites.adapter = null
+        _binding = null
     }
 }

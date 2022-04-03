@@ -17,33 +17,35 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ReaderFragment : Fragment() {
     private var previousPageScrollState: Int = -1
     private lateinit var pageAdapter: ReaderPageAdapter
-    private lateinit var binding: FragmentReaderBinding
     private val viewModel: ReaderViewModel by viewModel()
     private val readFragmentArgs: ReaderFragmentArgs by navArgs()
+
+    private var _binding: FragmentReaderBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentReaderBinding.inflate(inflater, container, false)
+        _binding = FragmentReaderBinding.inflate(inflater, container, false)
         pageAdapter = ReaderPageAdapter(ArrayList(), this)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         configureViewModel()
     }
 
     private fun configureViewModel() {
         viewModel.loadChapter(readFragmentArgs.chapterLink)
-        viewModel.chapter.observe(viewLifecycleOwner, { chapter: Chapter ->
+        viewModel.chapter.observe(viewLifecycleOwner) { chapter: Chapter ->
             activity?.let {
                 (activity as? AppCompatActivity)?.supportActionBar?.title =
                     getString(R.string.reader_fragment_title, chapter.currentChapter.toString())
             }
             configureViewPager()
             pageAdapter.setItems(chapter.images)
-        })
+        }
     }
 
     private fun configureViewPager() {
@@ -90,5 +92,10 @@ class ReaderFragment : Fragment() {
             )
         }
         return ""
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
