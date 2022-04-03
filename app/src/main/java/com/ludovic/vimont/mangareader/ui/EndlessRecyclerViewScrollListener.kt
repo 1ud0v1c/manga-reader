@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
  */
 abstract class EndlessRecyclerViewScrollListener(private var layoutManager: RecyclerView.LayoutManager,
                                                  private val visibleThreshold: Int = 5): RecyclerView.OnScrollListener() {
-    private var isLoading = true
-    private var currentPage = 0
+    var currentPage = 0
+    var isLoading = true
     private val startingPageIndex = 0
     private var previousTotalItemCount = 0
 
@@ -65,10 +65,6 @@ abstract class EndlessRecyclerViewScrollListener(private var layoutManager: Recy
             onLoadMore(currentPage)
             isLoading = true
         }
-    }
-
-    fun getCurrentPage(): Int {
-        return currentPage
     }
 
     fun resetState() {

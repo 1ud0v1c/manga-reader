@@ -15,7 +15,7 @@ class ListRepositoryImpl(private val jikanAPI: JikanAPI,
         }
         val numberOfItemsToFetch = page * JikanAPI.ITEMS_PER_PAGE
         if (cachedMangas.size >= numberOfItemsToFetch) {
-            return cachedMangas.subList(0, numberOfItemsToFetch)
+            return cachedMangas
         }
         val newMangasToLoad = fetchFromJikanAPI(page)
         newMangasToLoad.addAll(0, cachedMangas)
@@ -28,9 +28,9 @@ class ListRepositoryImpl(private val jikanAPI: JikanAPI,
             val response: Response<JikanResponse> = jikanAPI.getPopularMangas(page)
             if (response.isSuccessful) {
                 response.body()?.let { jikanResponse: JikanResponse ->
-                    val topMangs: List<Manga> = jikanResponse.top
-                    mangas.addAll(topMangs)
-                    mangaDao.insert(topMangs)
+                    val topMangas: List<Manga> = jikanResponse.top
+                    mangas.addAll(topMangas)
+                    mangaDao.insert(topMangas)
                 }
             }
         } catch (exception: Exception) {

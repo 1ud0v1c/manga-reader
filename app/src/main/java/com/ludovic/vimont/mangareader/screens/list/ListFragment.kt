@@ -19,14 +19,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.mangareader.R
+import com.ludovic.vimont.mangareader.api.JikanAPI
 import com.ludovic.vimont.mangareader.databinding.FragmentListBinding
 import com.ludovic.vimont.mangareader.entities.Manga
 import com.ludovic.vimont.mangareader.ui.EndlessRecyclerViewScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment: Fragment() {
-    private val listAdapter = ListAdapter(ArrayList())
     private val viewModel: ListViewModel by viewModel()
+
+    private val listAdapter = ListAdapter(ArrayList())
+    private lateinit var endlessRecyclerViewScrollListener: EndlessRecyclerViewScrollListener
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -50,10 +53,10 @@ class ListFragment: Fragment() {
             val action: NavDirections = ListFragmentDirections.actionListFragmentToDetailFragment(manga.id, manga.cover)
             findNavController().navigate(action)
         }
-        val endlessRecyclerViewScrollListener = object: EndlessRecyclerViewScrollListener(
+        endlessRecyclerViewScrollListener = object: EndlessRecyclerViewScrollListener(
             layoutManager = requireNotNull(recyclerView.layoutManager)
         ) {
-            override fun onLoadMore(currentPage: Int) = viewModel.fetchMangas(currentPage+1)
+            override fun onLoadMore(currentPage: Int) = viewModel.fetchMangas(currentPage + 1)
         }
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener)
     }
@@ -62,6 +65,7 @@ class ListFragment: Fragment() {
         viewModel.fetchMangas()
         viewModel.mangas.observe(viewLifecycleOwner) { mangas: List<Manga> ->
             listAdapter.setItems(mangas)
+            endlessRecyclerViewScrollListener.currentPage = mangas.size / JikanAPI.ITEMS_PER_PAGE
         }
     }
 
@@ -72,6 +76,9 @@ class ListFragment: Fragment() {
         searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 searchView.onActionViewCollapsed()
+                endlessRecyclerViewScrollListener.isLoading = false
+            } else {
+                endlessRecyclerViewScrollListener.isLoading = true
             }
         }
         searchView.setOnCloseListener {
