@@ -3,6 +3,8 @@ package com.ludovic.vimont.mangareader.screens.list
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.ludovic.vimont.mangareader.R
@@ -12,7 +14,9 @@ import kotlin.collections.ArrayList
 
 class ListAdapter(
     private val mangas: ArrayList<Manga>
-): RecyclerView.Adapter<ListAdapter.MangaViewHolder>() {
+): RecyclerView.Adapter<ListAdapter.MangaViewHolder>(), Filterable {
+    private var filteredMangas: List<Manga> = mangas
+
     var onItemClick: ((Manga) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MangaViewHolder {
@@ -21,15 +25,37 @@ class ListAdapter(
     }
 
     override fun onBindViewHolder(holder: MangaViewHolder, position: Int) {
-        holder.bind(mangas[position], onItemClick)
+        holder.bind(filteredMangas[position], onItemClick)
     }
 
-    override fun getItemCount(): Int = mangas.size
+    override fun getItemCount(): Int = filteredMangas.size
 
     fun setItems(items: List<Manga>) {
         mangas.clear()
         mangas.addAll(items)
         notifyDataSetChanged()
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val newSearch: String = charSequence.toString()
+                val filterResults = FilterResults()
+                filterResults.values = if (newSearch.isEmpty()) {
+                    mangas
+                } else {
+                    mangas.filter {
+                        it.title.lowercase().contains(newSearch.lowercase())
+                    }
+                }
+                return filterResults
+            }
+
+            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                filteredMangas = filterResults.values as List<Manga>
+                notifyDataSetChanged()
+            }
+        }
     }
 
     class MangaViewHolder(
