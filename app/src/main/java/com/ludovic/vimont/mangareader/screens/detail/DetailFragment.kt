@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
@@ -60,6 +61,9 @@ class DetailFragment: Fragment() {
                     }
                 }
                 isFavorite = !isFavorite
+            }
+            imageButtonSortChapters.setOnClickListener {
+                detailChapterAdapter.reverseItems()
             }
         }
     }

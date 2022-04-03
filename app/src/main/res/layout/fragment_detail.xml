@@ -93,7 +93,7 @@
         tools:text="@tools:sample/lorem" />
 
     <ImageButton
-        android:id="@+id/spinner_sort_chapters"
+        android:id="@+id/image_button_sort_chapters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"

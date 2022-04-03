@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.ItemChapterBinding
 import com.ludovic.vimont.mangareader.entities.LinkChapter
+import java.util.Collections
 
 class DetailChapterAdapter(
     private val linkChapters: ArrayList<LinkChapter>
@@ -29,6 +30,11 @@ class DetailChapterAdapter(
     fun setItems(items: List<LinkChapter>) {
         linkChapters.clear()
         linkChapters.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun reverseItems() {
+        linkChapters.reverse()
         notifyDataSetChanged()
     }
 
