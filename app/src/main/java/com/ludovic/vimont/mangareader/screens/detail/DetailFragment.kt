@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
 import com.ludovic.vimont.mangareader.entities.LinkChapter
@@ -53,11 +54,13 @@ class DetailFragment: Fragment() {
                     imageViewFavorite.setImageResource(R.drawable.ic_favorite_empty)
                     readingPage?.let {
                         viewModel.removeFromFavorite(it.id)
+                        displaySnackBar(binding.root, getString(R.string.detail_fragment_remove_from_favorite))
                     }
                 } else {
                     imageViewFavorite.setImageResource(R.drawable.ic_favorite_full)
                     readingPage?.let {
                         viewModel.addToFavorite(it.id)
+                        displaySnackBar(binding.root, getString(R.string.detail_fragment_add_to_favorite))
                     }
                 }
                 isFavorite = !isFavorite
@@ -66,6 +69,10 @@ class DetailFragment: Fragment() {
                 detailChapterAdapter.reverseItems()
             }
         }
+    }
+
+    private fun displaySnackBar(view: View, text: String, duration: Int = Snackbar.LENGTH_SHORT) {
+        Snackbar.make(view, text, duration).show()
     }
 
     private fun configureRecyclerViews() {

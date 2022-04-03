@@ -13,6 +13,8 @@
     <string name="detail_fragment_title">%s</string>
     <string name="detail_fragment_number_of_chapters">%d chapters</string>
     <string name="detail_fragment_item_date">Added: %s</string>
+    <string name="detail_fragment_add_to_favorite">Add to favorite</string>
+    <string name="detail_fragment_remove_from_favorite">Remove from favorite</string>
 
     <!-- ReaderFragment -->
     <string name="reader_fragment_title">Chapter: %s</string>
