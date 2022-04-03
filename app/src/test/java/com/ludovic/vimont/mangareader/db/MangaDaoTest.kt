@@ -4,11 +4,13 @@ import android.os.Build
 import com.ludovic.vimont.mangareader.MockModel
 import com.ludovic.vimont.mangareader.entities.Manga
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.AutoCloseKoinTest
+import org.koin.core.context.GlobalContext
+import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -17,7 +19,7 @@ import kotlin.collections.ArrayList
 
 @Config(sdk = [Build.VERSION_CODES.P], manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
-class MangaDaoTest: AutoCloseKoinTest() {
+class MangaDaoTest: KoinTest {
     private val mangas = ArrayList<Manga>()
     private val mangasDao: MangaDao by inject()
 
@@ -27,6 +29,11 @@ class MangaDaoTest: AutoCloseKoinTest() {
         mangas.add(MockModel.buildManga())
         mangas.add(MockModel.buildManga())
         mangas.add(MockModel.buildManga())
+    }
+
+    @After
+    fun tearDown() {
+        GlobalContext.stopKoin()
     }
 
     @Test
