@@ -2,6 +2,7 @@
     <string name="app_name">MangaReader</string>
 
     <!-- HomeActivity -->
+    <string name="action_bar_menu_search_title">Search</string>
     <string name="bottom_navigation_view_popular">Popular</string>
     <string name="bottom_navigation_view_favorite">Favorite</string>
 
