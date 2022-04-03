@@ -33,9 +33,7 @@ class FavoriteFragment: Fragment() {
     }
 
     private fun configureRecyclerView() {
-        val recyclerView: RecyclerView = binding.recyclerViewFavorites
-        recyclerView.adapter = listAdapter
-        recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        binding.recyclerViewFavorites.adapter = listAdapter
         listAdapter.onItemClick = { manga: Manga ->
             val action: NavDirections = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(manga.id, manga.cover)
             findNavController().navigate(action)

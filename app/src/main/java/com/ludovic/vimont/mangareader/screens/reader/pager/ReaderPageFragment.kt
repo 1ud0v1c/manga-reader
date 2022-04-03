@@ -11,6 +11,7 @@ import coil.load
 import com.ludovic.vimont.mangareader.api.MangaAPI
 import com.ludovic.vimont.mangareader.databinding.FragmentPageBinding
 import com.ludovic.vimont.mangareader.entities.ChapterPage
+import com.ludovic.vimont.mangareader.ui.ReaderDoubleTapListener
 
 class ReaderPageFragment: Fragment() {
     companion object {
@@ -24,6 +25,7 @@ class ReaderPageFragment: Fragment() {
             return readerPageFragment
         }
     }
+
     private var _binding: FragmentPageBinding? = null
     private val binding get() = requireNotNull(_binding)
 
@@ -48,18 +50,7 @@ class ReaderPageFragment: Fragment() {
             with(photoViewCurrentPage) {
                 setZoomTransitionDuration(300)
                 setScaleLevels(1f, 2f, 5f)
-                setOnDoubleTapListener(
-                    object : GestureDetector.SimpleOnGestureListener() {
-                        override fun onDoubleTap(e: MotionEvent): Boolean {
-                            if (scale > 1f) {
-                                setScale(1f, e.x, e.y, true)
-                            } else {
-                                setScale(2f, e.x, e.y, true)
-                            }
-                            return true
-                        }
-                    }
-                )
+                setOnDoubleTapListener(ReaderDoubleTapListener(this))
             }
         }
     }

@@ -13,8 +13,9 @@ class ListRepositoryImpl(private val jikanAPI: JikanAPI,
         if (cachedMangas.isEmpty()) {
             return fetchFromJikanAPI(page)
         }
-        if (cachedMangas.size >= page * JikanAPI.ITEMS_PER_PAGE) {
-            return cachedMangas.subList(0, page * JikanAPI.ITEMS_PER_PAGE)
+        val numberOfItemsToFetch = page * JikanAPI.ITEMS_PER_PAGE
+        if (cachedMangas.size >= numberOfItemsToFetch) {
+            return cachedMangas.subList(0, numberOfItemsToFetch)
         }
         val newMangasToLoad = fetchFromJikanAPI(page)
         newMangasToLoad.addAll(0, cachedMangas)

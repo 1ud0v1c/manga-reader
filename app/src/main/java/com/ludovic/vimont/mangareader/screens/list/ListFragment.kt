@@ -33,18 +33,16 @@ class ListFragment: Fragment() {
     }
 
     private fun configureRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         val recyclerView: RecyclerView = binding.recyclerViewMangas
         recyclerView.adapter = listAdapter
-        recyclerView.layoutManager = linearLayoutManager
         listAdapter.onItemClick = { manga: Manga ->
             val action: NavDirections = ListFragmentDirections.actionListFragmentToDetailFragment(manga.id, manga.cover)
             findNavController().navigate(action)
         }
-        val endlessRecyclerViewScrollListener = object: EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            override fun onLoadMore(currentPage: Int) {
-                viewModel.fetchMangas(currentPage+1)
-            }
+        val endlessRecyclerViewScrollListener = object: EndlessRecyclerViewScrollListener(
+            layoutManager = requireNotNull(recyclerView.layoutManager)
+        ) {
+            override fun onLoadMore(currentPage: Int) = viewModel.fetchMangas(currentPage+1)
         }
         recyclerView.addOnScrollListener(endlessRecyclerViewScrollListener)
     }
