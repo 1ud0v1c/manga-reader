@@ -33,11 +33,11 @@ class MangakakalotAPI(private val mangaDao: MangaDao): MangaAPI {
             val contentChapter = chaptersDocument.select(".row-content-chapter").first()
             val chaptersLinks = contentChapter.select(".a-h")
             val chapters = ArrayList<LinkChapter>()
-            for (chapterLink in chaptersLinks) {
-                val ahref: Element = chapterLink.select("a").first()
-                val link = ahref.attr("href")
+            chaptersLinks.forEachIndexed { index: Int, chapterLink: Element ->
+                val aHref: Element = chapterLink.select("a").first()
+                val link = aHref.attr("href")
                 val addedDate: String = chapterLink.select(".chapter-time").first().text()
-                chapters.add(LinkChapter(ahref.text(), addedDate, link))
+                chapters.add(LinkChapter(index, aHref.text(), addedDate, link))
             }
             val isFavorite = mangaDao.get(fullManga.id).isFavorite
             return ReadingPage(

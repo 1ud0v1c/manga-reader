@@ -36,11 +36,11 @@ class MangaFreakAPI(private val mangaDao: MangaDao): MangaAPI {
             val contentChapter = chaptersDocument.select(".manga_series_list").first()
             val chaptersLinks = contentChapter.select("tbody").first().select("tr")
             val chapters = ArrayList<LinkChapter>()
-            for (chapterLink in chaptersLinks) {
+            chaptersLinks.forEachIndexed { index, chapterLink ->
                 val tds: Elements = chapterLink.select("td")
                 val link = tds.first()
                 val addedDate: String = tds[1].text()
-                chapters.add(LinkChapter(link.text(), addedDate, link.attr("href")))
+                chapters.add(LinkChapter(index, link.text(), addedDate, link.attr("href")))
             }
             val isFavorite = mangaDao.get(fullManga.id).isFavorite
             return ReadingPage(

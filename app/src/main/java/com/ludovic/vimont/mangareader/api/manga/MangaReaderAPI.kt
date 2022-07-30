@@ -76,12 +76,12 @@ class MangaReaderAPI(private val mangaDao: MangaDao): MangaAPI {
         val chapters = ArrayList<LinkChapter>()
         val trs: Elements = table.select("tr")
         trs.removeFirst()
-        for (tr: Element in trs) {
+        trs.forEachIndexed { index, tr ->
             val tds: Elements = tr.select("td")
             val ahref: Element = tds[0].selectFirst("a")
             val addedDate: String = tds[1].text()
             val link = ahref.attr("href").removeRange(0, 1)
-            chapters.add(LinkChapter(ahref.text(), addedDate, buildLink(link)))
+            chapters.add(LinkChapter(index,  ahref.text(), addedDate, buildLink(link)))
         }
         return chapters
     }

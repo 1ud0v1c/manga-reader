@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.ItemChapterBinding
 import com.ludovic.vimont.mangareader.entities.LinkChapter
-import java.util.Collections
+import com.ludovic.vimont.mangareader.entities.SortOrder
 
 class DetailChapterAdapter(
     private val linkChapters: ArrayList<LinkChapter>
@@ -33,8 +33,11 @@ class DetailChapterAdapter(
         notifyDataSetChanged()
     }
 
-    fun reverseItems() {
-        linkChapters.reverse()
+    fun sort(sortOrder: SortOrder) {
+        when (sortOrder) {
+            SortOrder.OLD_TO_RECENT -> linkChapters.sortWith(compareByDescending { it.index })
+            SortOrder.RECENT_TO_OLD -> linkChapters.sortWith(compareBy { it.index })
+        }
         notifyDataSetChanged()
     }
 

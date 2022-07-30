@@ -16,6 +16,7 @@ import com.ludovic.vimont.mangareader.R
 import com.ludovic.vimont.mangareader.databinding.FragmentDetailBinding
 import com.ludovic.vimont.mangareader.entities.LinkChapter
 import com.ludovic.vimont.mangareader.entities.ReadingPage
+import com.ludovic.vimont.mangareader.entities.SortOrder
 import com.ludovic.vimont.mangareader.screens.detail.adapter.DetailChapterAdapter
 import com.ludovic.vimont.mangareader.screens.detail.adapter.DetailGenreAdapter
 
@@ -66,7 +67,7 @@ class DetailFragment: Fragment() {
                 isFavorite = !isFavorite
             }
             imageButtonSortChapters.setOnClickListener {
-                detailChapterAdapter.reverseItems()
+                viewModel.onSortClicked()
             }
         }
     }
@@ -98,22 +99,29 @@ class DetailFragment: Fragment() {
             with(binding) {
                 textViewMangaName.text = page.name
                 textViewMangaAuthor.text = page.author
-                context?.let {
-                    imageViewMangaCover.load(detailFragmentArgs.mangaCover)
-                    textViewNumberOfChapters.text =
-                        it.getString(R.string.detail_fragment_number_of_chapters,
-                            page.chapters.size)
-                }
+                imageViewMangaCover.load(detailFragmentArgs.mangaCover)
+                textViewNumberOfChapters.text = getString(
+                    R.string.detail_fragment_number_of_chapters, page.chapters.size
+                )
                 if (page.isFavorite) {
                     imageViewFavorite.setImageResource(R.drawable.ic_favorite_full)
                     isFavorite = page.isFavorite
                 }
-                val genres = if (page.genres.size >= 3) page.genres.subList(0, 3) else page.genres
+                val genres = if (page.genres.size >= 3) {
+                    page.genres.subList(0, 3)
+                } else {
+                    page.genres
+                }
                 detailGenreAdapter.setItems(genres)
                 detailChapterAdapter.setItems(page.chapters)
                 readingPage = page
             }
         }
+        viewModel.sortOrder.observe(viewLifecycleOwner, ::handleSortOrder)
+    }
+
+    private fun handleSortOrder(sortOrder: SortOrder) {
+        detailChapterAdapter.sort(sortOrder)
     }
 
     override fun onDestroyView() {
